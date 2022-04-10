@@ -8,3 +8,7 @@ This project is a part of my website & portfolio: [gavinshr.com](https://gavinsh
 ## Live Demo
 You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://gavinshr.com/MazeAlgorithm/index.html)  
 ^^ Note: This link isn't active yet - This will work once my code is fully finished & published, for the time being this just pulls up my existing JavaScript maze algorithm demo on my website.
+
+<div align="center">
+  <img width="100%" src="/assets/GitHub-Demo-Img.png" alt="JavaScript Simulation Demo Screenshot" />
+</div>
