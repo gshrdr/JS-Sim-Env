@@ -22,3 +22,12 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [ ] Explore a Redis cache database for super fast real-time data storage
 - [ ] Explore a PHP/MySQL based back-end system for long-term data storage for the individual game board/entity state + a user login/sign up (PHP/MySQL are supported on my Apache hosting, otherwise I would use Node.JS/MongoDB/Express.JS - perhaps this will be something I explore in the future once I upgrade to DigitalOcean Droplet based hosting)
 - [ ] Get a live code demo working, host this code demo on [gavinshr.com](https://gavinshr.com), include a link to this project with information & an image on my [projects page](https://gavinshr.com/projects), and update the live code demo link at the top of this ReadMe file
+
+## Sources
+
+These are the sources, tutorials, and code docs I used to build this project:
+
+* [Mozilla Docs - HTML5 Canvas Rendering](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
+* [Joe Iddon JavaScript TileMap Perlin Noise Tutorial](https://joeiddon.github.io/projects/javascript/perlin.html)
+* [JavaScript TileMap Rendering Tutorial](https://stackoverflow.com/questions/21844451/render-a-tile-map-using-javascript)
+* [HTML5 Canvas Resizing & Scaling Tutorial](https://medium.com/@doomgoober/understanding-html-canvas-scaling-and-sizing-c04925d9a830)
