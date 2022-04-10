@@ -61,12 +61,7 @@ body {
 
 .box .row.header {
   padding: 10px;
-  flex: 0 1 auto;
-  /* The above is shorthand for:
-  flex-grow: 0,
-  flex-shrink: 1,
-  flex-basis: auto
-  */
+  flex: 0 1 auto; /* Shorthand for: flex-grow: 0, flex-shrink: 1, flex-basis: auto */
 }
 
 .box .row.header .container {
@@ -97,36 +92,4 @@ body {
 #resize {
   width: 100%;
   height: 100%;
-}
-
-
-/*** OLD ****/
-/*
- * Tilemap Canvas Containers / Elements
- */
-
-.tilemap-container {
-  display: block;
-  width: 1000px;
-  height: 1000px;
-  margin: 10px;
-}
-
-#tilemap-canvas {
-  z-index: 1;
-  display: block;
-  object-fit: contain;
-  position: absolute;
-  background-color: #000;
-  width: 1000px;
-  height: 1000px;
-}
-
-#entities-canvas {
-  z-index: 2;
-  display: block;
-  object-fit: contain;
-  position: absolute;
-  width: 1000px;
-  height: 1000px;
 }
