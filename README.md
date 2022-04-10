@@ -20,6 +20,7 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [ ] Build a JavaScript update based game loop so I can update entities across the map programmatically 60x per second
 - [ ] Explore a multi-player system with web sockets for a real time connection between multiple people playing/accessing the same game board
 - [ ] Explore a Redis cache database for super fast real-time data storage
+- [ ] Explore an XML/HTTP based REST API built with PHP for server communication
 - [ ] Explore a PHP/MySQL based back-end system for long-term data storage for the individual game board/entity state + a user login/sign up (PHP/MySQL are supported on my Apache hosting, otherwise I would use Node.JS/MongoDB/Express.JS - perhaps this will be something I explore in the future once I upgrade to DigitalOcean Droplet based hosting)
 - [ ] Get a live code demo working, host this code demo on [gavinshr.com](https://gavinshr.com), include a link to this project with information & an image on my [projects page](https://gavinshr.com/projects), and update the live code demo link at the top of this ReadMe file
 
