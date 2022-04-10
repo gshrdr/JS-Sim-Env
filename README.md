@@ -37,3 +37,5 @@ These are the sources, tutorials, and code docs I used to build this project:
 * [Evolution Simulator Inspiration - InderPabla](https://github.com/InderPabla/EvolutionSimulator-NeuralNetwork-GeneticAlgorithm)
 * [CSS Element Fill Remaining Height Of Screen](https://stackoverflow.com/questions/90178/make-a-div-fill-the-height-of-the-remaining-screen-space)
 * [Resize HTML5 Canvas To Fill Container](https://thewebdev.info/2021/03/01/how-to-resize-html5-canvas-to-fit-the-window/)
+* [Debouncing JavaScript Event Listeners](https://gomakethings.com/debouncing-your-javascript-events/)
+* [HTML5 Canvas Scrolling Camera System](https://gamedev.stackexchange.com/questions/86820/how-do-i-make-a-scrolling-map-within-an-html5-canvas)
