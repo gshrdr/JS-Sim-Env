@@ -7,13 +7,45 @@
 // It is recommended to set this flag to false for production builds.
 const shouldLogDraws = false;
 
-// Handle Canvas Draw Call
+/*
+ * Handle Drawing
+ */
+
+// Main Redraw Function
 function redraw() {
   const ctx = canvas.getContext("2d");
+  drawBorder(ctx);
+  drawRectangle(ctx);
+}
+
+// Draw Border
+function drawBorder(ctx) {
   ctx.strokeStyle = 'blue';
   ctx.lineWidth = '5';
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
 }
+
+// Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
+let positionX = 50;
+let minXPosition = 50;
+let maxXPosition = 400;
+let speedX = 1;
+function drawRectangle(ctx) {
+  // Update Rectangle Position
+  positionX = positionX + speedX;
+  if (positionX > maxXPosition || positionX < minXPosition) {
+    speedX = speedX * (-1);
+  }
+
+  // Draw Rectangle
+  ctx.fillStyle = 'green';
+  ctx.rect(positionX, 50, 150, 75);
+  ctx.fill();
+}
+
+/*
+ * Handling Resizing
+ */
 
 // Handle Resize Call
 function resize() {
@@ -37,8 +69,11 @@ window.onload = function(){
    }, 500);
 };
 
-// ANIMATION LOOP OPTION 1 - REQUEST ANIMATION FRAME 60HERTZ UPDATE
+/*
+ * Main Animation Loop
+ */
 
+// Animation Loop Variables
 const refreshRate = 1000 / 60;
 let shouldRunAnimationLoop = false;
 
