@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>Maze Algorithm</title>
+  <link rel="stylesheet" type="text/css" href="stylesheet.css">
+  <script type="text/javascript" src="maze.js" async></script>
+</head>
+<body>
+  <div class="container">
+    <div class="top-container">
+      <div class="top-container-items">
+        <h1>Maze Algorithm</h1>
+        <a href="/projects">&larr; Projects</a>
+        <div class="top-container-items-controls">
+          <button id="generate-smooth-button" onclick="generateMaze();" >Generate Maze</button>
+          <button id="solve-button" onclick="solveMaze();">Solve Maze</button>
+        </div>
+        <p>I built the HTML & CSS layout for this page, I coded the maze solving algorithm, and I modified the maze generation algorithm. The original maze generation algorithm can be found <a href="https://codepen.io/mohamed9714/pen/dyPoaGx">here</a>. This maze solving algorithm isn't perfect, but it will <i>eventually</i> reach the end :)</p>
+        <br/>
+      </div>
+    </div>
+
+    <div class="canvas-container" id="canvas-container">
+      <canvas></canvas>
+    </div>
+  </div>
+</body>
+</html>
