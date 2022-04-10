@@ -55,7 +55,7 @@ a:hover {
   display: block;
   width: 1000px;
   height: 1000px;
-  padding-top: 20px;
+  margin: 10px;
 }
 
 #tilemap-canvas {
