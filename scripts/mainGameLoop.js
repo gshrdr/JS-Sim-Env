@@ -54,8 +54,8 @@ function resize() {
 }
 
 // Initial Draw Call + Resize
-let canvas = document.getElementById("resize");
-let container = document.getElementById('resize-container');
+let container = document.getElementById('canvas-container');
+let canvas = document.getElementById("primary-canvas");
 if (shouldLogDraws) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
 resize();
 redraw();
@@ -89,25 +89,27 @@ function step() {
 
 // Start animation loop (such as when the screen begins resizing)
 function startAnimationFrame() {
+  if (shouldRunAnimationLoop == false) {
     // Begin resizing / animation loop
     shouldRunAnimationLoop = true;
     window.requestAnimationFrame(step);
     if (shouldLogDraws) console.warn("start");
+  }
 }
 
 // End animation loop (such as when the screen stops resizing)
 function endAnimationFrame() {
+  if (shouldRunAnimationLoop) {
     // End resizing / animation loop
     shouldRunAnimationLoop = false;
     if (shouldLogDraws) console.warn("end");
+  }
 }
 
 // Listen For Window Resize + Immediately Resize/Redraw + Debounced Log Resize To Console
 const debouncedHandler = debounce(endAnimationFrame, 250);
 window.addEventListener('resize', () => {
-  if (shouldRunAnimationLoop == false) {
-    startAnimationFrame();
-  }
+  startAnimationFrame();
 	debouncedHandler();
 });
 

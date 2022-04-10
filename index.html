@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -16,9 +17,11 @@
     <link rel="stylesheet" href="styles/stylesheet.css">
 
     <!-- JavaScript -->
-    <script defer src="scripts/resize.js"></script>
+    <script defer src="scripts/mainGameLoop.js"></script>
+    <noscript>JavaScript is disabled on your browser - this application will not work without JavaScript.</noscript>
   </head>
-<body>
+
+  <body>
     <div class="box">
       <div class="row header">
         <div class="container">
@@ -29,14 +32,17 @@
         </div>
       </div>
       <div class="row content">
-        <div id="resize-container">
-          <canvas id="resize"></canvas>
+        <div id="canvas-container">
+          <canvas id="primary-canvas"></canvas>
+          <div class="debug-container">
+            <p>Test Paragraph</p>
+          </div>
         </div>
       </div>
       <div class="row footer">
         <p>Copyright 2022 &copy; Gavin Shrader</p>
       </div>
     </div>
+  </body>
 
-</body>
 </html>
