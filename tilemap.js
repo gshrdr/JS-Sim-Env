@@ -65,9 +65,9 @@ var tileset = {
 }
 
 // Setup Tilemap + Tile
-let tileSize = 16; // Individual tile size
-let mapCols = 40; // number of columns in tile map
-let mapRows = 40; // number of rows in tile map
+let tileSize = 20; // Individual tile size
+let mapCols = 50; // number of columns in tile map
+let mapRows = 50; // number of rows in tile map
 let mapWidth = mapCols * tileSize;
 let mapHeight = mapRows * tileSize;
 
