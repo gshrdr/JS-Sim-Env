@@ -2,8 +2,13 @@
  * This script ensures the primary canvas element resizes to fill the viewport for the main content container of the page.
  */
 
+// Boolean flag to determine if we should output a draw log to the console
+// Note - if this flag is enabled and the console is open, the constant output causes the browser to be laggy
+// It is recommended to set this flag to false for production builds.
+const shouldLogDraws = false;
+
 // Handle Canvas Draw Call
-function draw(canvas) {
+function redraw() {
   const ctx = canvas.getContext("2d");
   ctx.strokeStyle = 'blue';
   ctx.lineWidth = '5';
@@ -14,27 +19,60 @@ function draw(canvas) {
 function resize() {
   canvas.width = container.clientWidth;
   canvas.height = container.clientHeight;
-  draw(canvas);
 }
 
 // Initial Draw Call + Resize
 let canvas = document.getElementById("resize");
 let container = document.getElementById('resize-container');
-console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+if (shouldLogDraws) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
 resize();
+redraw();
 
 // Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
 window.onload = function(){
    setTimeout(function() {
-     console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+     if (shouldLogDraws) console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
      resize();
+     redraw();
    }, 500);
 };
 
-// Listen For Window Resize + Immediately Resize/Redraw + Debounced Log Resize To Console
-const debouncedHandler = debounce(resizeContent, 50);
-window.addEventListener('resize', () => {
+// ANIMATION LOOP OPTION 1 - REQUEST ANIMATION FRAME 60HERTZ UPDATE
+
+const refreshRate = 1000 / 60;
+let shouldRunAnimationLoop = false;
+
+// Handle one requestAnimationFrame step
+function step() {
   resize();
+  redraw();
+  if (shouldLogDraws) console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+  if (shouldRunAnimationLoop) {
+    window.requestAnimationFrame(step);
+  }
+}
+
+// Start animation loop (such as when the screen begins resizing)
+function startAnimationFrame() {
+    // Begin resizing / animation loop
+    shouldRunAnimationLoop = true;
+    window.requestAnimationFrame(step);
+    if (shouldLogDraws) console.warn("start");
+}
+
+// End animation loop (such as when the screen stops resizing)
+function endAnimationFrame() {
+    // End resizing / animation loop
+    shouldRunAnimationLoop = false;
+    if (shouldLogDraws) console.warn("end");
+}
+
+// Listen For Window Resize + Immediately Resize/Redraw + Debounced Log Resize To Console
+const debouncedHandler = debounce(endAnimationFrame, 250);
+window.addEventListener('resize', () => {
+  if (shouldRunAnimationLoop == false) {
+    startAnimationFrame();
+  }
 	debouncedHandler();
 });
 
@@ -46,9 +84,4 @@ function debounce(func, time){
         if(timer) clearTimeout(timer);
         timer = setTimeout(func, time, event);
     };
-}
-
-// End Of Debounce - Log Resize Details
-function resizeContent() {
-    console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
 }

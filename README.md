@@ -39,3 +39,4 @@ These are the sources, tutorials, and code docs I used to build this project:
 * [Resize HTML5 Canvas To Fill Container](https://thewebdev.info/2021/03/01/how-to-resize-html5-canvas-to-fit-the-window/)
 * [Debouncing JavaScript Event Listeners](https://gomakethings.com/debouncing-your-javascript-events/)
 * [HTML5 Canvas Scrolling Camera System](https://gamedev.stackexchange.com/questions/86820/how-do-i-make-a-scrolling-map-within-an-html5-canvas)
+* [JavaScript Animation Loop Tutorial](https://www.codeblocq.com/2016/05/Two-Ways-of-Creating-an-Animation-Loop-in-JavaScript/)
