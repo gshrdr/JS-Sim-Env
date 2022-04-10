@@ -40,11 +40,6 @@
 // Tutorial: https://thewebdev.info/2021/03/01/how-to-resize-html5-canvas-to-fit-the-window/
 const draw = (canvas) => {
   const ctx = canvas.getContext("2d");
-  /*
-  ctx.beginPath();
-  ctx.arc(95, 50, 40, 0, 2 * Math.PI);
-  ctx.stroke();
-  */
   ctx.strokeStyle = 'blue';
   ctx.lineWidth = '5';
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
@@ -55,23 +50,27 @@ let canvas = document.getElementById("resize");
 let container = document.getElementById('resize-container');
 canvas.width = container.clientWidth
 canvas.height = container.clientHeight
-console.log("Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
 draw(canvas)
 
-// BUG: Sometimes the very first draw call doesn't work... set up a 100ms time out to re-check after initial load
-// or perhaps a window.onload to call initial draw / sizing.. sometimes the initial height/width are wrong
+// Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
+window.onload = function(){
+   setTimeout(function(){
+       canvas.width = container.clientWidth
+       canvas.height = container.clientHeight
+       console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+       draw(canvas)
+   }, 1000);
+};
 
 // Listen For Window Resize
+let previousWidth = container.clientWidth
+let previousHeight = container.clientHeight
 window.addEventListener('resize', () => {
-  // Update canvas and container elements
-  // Is this necessary? Remove these lines in final code
-  container = document.getElementById('resize-container');
-  canvas = document.getElementById("resize");
-
   // Update canvas height to match container height (filling remaining screen)
   canvas.width = container.clientWidth
   canvas.height = container.clientHeight
 
-  console.log("Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+  console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
   draw(canvas)
 })
