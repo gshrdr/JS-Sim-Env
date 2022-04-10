@@ -1,30 +1,22 @@
-body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: #111827;
-	margin: 0;
-	padding: 0;
-	box-sizing: border-box;
-	display: flex;
-	justify-content: center;
-	align-items: center;
-	height: 100vh;
-  overflow-y: scroll;
-  overflow-x: hidden;
+/*
+ * Overall Application Styling
+ */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
 }
 
+body {
+  font-family: sans-serif;
+  color: #d1d5db;
+  background-color: #111827;
+}
 
 h1 {
   font-size: 30px;
   color: white;
-  margin-bottom: 10px;
-}
-
-hr {
-  width: 95%;
 }
 
 p {
@@ -40,85 +32,41 @@ a:hover {
   color: #60a5fa;
 }
 
+/*
+ * Main Page Content Containers
+ */
 
 .container {
-  margin: 0;
-  padding: 0;
-	padding-left: 10px;
-  padding-right: 10px;
-	box-sizing: border-box;
-	display: flex;
-  flex-direction: column;
-	justify-content: center;
-	align-items: center;
-  width: 100vw;
-  height: 100vh;
+  padding: 20px;
+  margin: 20px;
 }
 
-.top-container {
-  width: 100vw;
+/*
+ * Tilemap Canvas Containers / Elements
+ */
+
+.tilemap-container {
+  display: block;
+  width: 640px;
+  height: 640px;
+  padding-top: 20px;
 }
 
-.top-container-items {
-  text-align: center;
-  top: 0;
-  width: 100vw;
-  background-color: #1f2937;
-  border-bottom: 2px solid #374151;
-  margin-bottom: 5px;
-	padding-left: 25px;
-  padding-right: 25px;
-	box-sizing: border-box;
-	display: flex;
-  flex-direction: column;
-	justify-content: center;
-	align-items: center;
+#tilemap-canvas {
+  z-index: 1;
+  display: block;
+  object-fit: contain;
+  position: absolute;
+  background-color: #000;
+  width: 640px;
+  height: 640px;
 }
 
-.top-container-items-controls {
-  white-space: nowrap;
-}
-
-.top-container-items-controls button {
-  display: inline-block;
-  width: 150px;
-  margin-left: 8px;
-  margin-right: 8px;
-  background: #1d4ed8;
-  border: 2px solid #1d4ed8;
-  cursor: pointer;
-  color: white;
-  font-size: 15px;
-}
-
-.top-container-items-controls button:hover:not([disabled]) {
-  border: 2px solid white;
-}
-
-.canvas-container {
-  margin: 10px;
-  box-sizing: border-box;
-	display: flex;
-  flex-direction: column;
-	justify-content: center;
-	align-items: center;
-  width: 100%;
-  height: 100%;
-}
-
-@media screen and (max-width: 340px) {
-  .top-container-items-controls {
-    white-space: wrap;
-  }
-
-  .top-container-items-controls button {
-    display: flex;
-    margin-top: 10px;
-  }
-}
-
-@media screen and (max-width: 450px) {
-  .top-container-items-controls button:hover:not([disabled]) {
-    border: 2px solid #1d4ed8;
-  }
+#entities-canvas {
+  z-index: 2;
+  display: block;
+  object-fit: contain;
+  position: absolute;
+  width: 640px;
+  height: 640px;
 }
