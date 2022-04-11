@@ -30,6 +30,8 @@ These are the sources, tutorials, and code docs I used to build this project:
 
 * [Mozilla Docs - HTML5 Canvas Rendering](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
 * [Mozilla Docs - HTML5 Canvas Performance Tips](https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial/Optimizing_canvas)
+* [Mozilla Docs - Mouse Events](https://developer.mozilla.org/en-US/docs/Web/API/MouseEvent)
+* [Mozilla Docs - Touch Events](https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events)
 * [Joe Iddon JavaScript TileMap Perlin Noise Tutorial](https://joeiddon.github.io/projects/javascript/perlin.html)
 * [JavaScript TileMap Rendering Tutorial](https://stackoverflow.com/questions/21844451/render-a-tile-map-using-javascript)
 * [JavaScript Automatically Resize/Scale HTML5 Canvas](https://stackoverflow.com/questions/1664785/resize-html5-canvas-to-fit-window)

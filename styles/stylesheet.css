@@ -117,6 +117,10 @@ canvas {
   z-index: 2;
 }
 
+#drawable-canvas {
+  z-index: 3;
+}
+
 .debug-container {
   z-index: 3;
   position: absolute;
