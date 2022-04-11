@@ -190,47 +190,49 @@ function redraw() {
 
 // Draw Border
 function drawBorder(ctx) {
-  ctx.strokeStyle = 'blue';
-  ctx.lineWidth = '5';
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = '10';
   ctx.strokeRect(0, 0, canvas.width, canvas.height);
 }
 
 // Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
-let positionX = 50;
-let minXPosition = 50;
-let maxXPosition = 400;
+let positionX = 15;
+let minXPosition = 15;
+let maxXPosition = 200;
 let speedX = 1;
 function drawRectangle(ctx) {
-  // Update Rectangle Position
+  // Update rectangle position x
   positionX = positionX + speedX;
   if (positionX > maxXPosition || positionX < minXPosition) {
     speedX = speedX * (-1);
   }
 
-  // Draw Rectangle
+  // Update rectangle position y
+  positionY = canvas.height - 35;
+
+  // Draw rectangle
   ctx.fillStyle = 'blue';
-  ctx.rect(positionX, 50, 150, 75);
+  ctx.rect(positionX, positionY, 20, 20);
   ctx.fill();
 }
 
-/*
- * Draw tilemap
- */
-
+// Draw Tilemap
 function drawTilemap(ctx) {
   // Retrieve tilemap generator variables
   let map = tilemapGenerator.retrieveMap();
   let mapSize = tilemapGenerator.retrieveMapSize();
   let tileSize = tilemapGenerator.retrieveTileSize();
 
-  // Draw grid
+  // Draw Map
   for (let col = 0; col < mapSize.height; col += 1) {
     for (let row = 0; row < mapSize.width; row += 1) {
+      // Tile
       ctx.fillStyle = "green";
       ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
 
+      // Grid
       ctx.strokeStyle = "#000";
-      ctx.lineWidth = 1;
+      ctx.lineWidth = 2;
       ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
     }
   }
