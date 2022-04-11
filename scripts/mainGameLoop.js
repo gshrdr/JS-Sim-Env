@@ -177,6 +177,16 @@ function endFPS() {
   fpsElement.innerHTML = "FPS: --";
 }
 
+// Get a random RGB color
+// Source: https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript
+function getRandomRgb() {
+  var num = Math.round(0xffffff * Math.random());
+  var r = num >> 16;
+  var g = num >> 8 & 255;
+  var b = num & 255;
+  return 'rgb(' + r + ', ' + g + ', ' + b + ')';
+}
+
 /*
  * Handling Resizing - Tile Map Layer & Entities Layer
  */
@@ -268,7 +278,7 @@ function drawTilemap(ctx) {
   for (let col = 0; col < mapSize.height; col += 1) {
     for (let row = 0; row < mapSize.width; row += 1) {
       // Tile
-      ctx.fillStyle = Math.floor(Math.random()*16777215).toString(16);
+      ctx.fillStyle = getRandomRgb();
       ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
 
       // Grid

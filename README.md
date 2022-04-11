@@ -44,3 +44,5 @@ These are the sources, tutorials, and code docs I used to build this project:
 * [JavaScript requestAnimationFrame() Drawing Loop](https://www.codeblocq.com/2016/05/Two-Ways-of-Creating-an-Animation-Loop-in-JavaScript/)
 * [JavaScript Game Loop + FPS Counter](https://spicyyoghurt.com/tutorials/html5-javascript-game-development/create-a-proper-game-loop-with-requestanimationframe)
 * [How To Properly Clear HTML5 Canvas](https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing)
+* [JavaScript Determine If Touch Enabled Device](https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript)
+* [JavaScript Random RGB Color](https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript)
