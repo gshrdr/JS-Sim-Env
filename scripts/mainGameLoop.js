@@ -4,7 +4,8 @@
 
 // Primary canvas & container elements
 let container = document.getElementById('canvas-container');
-let canvas = document.getElementById("primary-canvas");
+let tilemapCanvas = document.getElementById("tilemap-canvas");
+let entityCanvas = document.getElementById("entity-canvas");
 
 // Tilemap generator object
 let tilemapGenerator;
@@ -24,15 +25,19 @@ window.onload = function() {
   tilemapGenerator = new TilemapGenerator(50, 50);
 
   // Initial Draw Call + Resize
-  if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-  resize();
-  redraw();
+  if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+  resizeTilemap();
+  redrawTilemap();
+  resizeEntities();
+  redrawEntities();
 
   // Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
   setTimeout(function() {
-    if (shouldLogInitialDraw) console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-    resize();
-    redraw();
+    if (shouldLogInitialDraw) console.log("DRAW AGAIN: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+    resizeTilemap();
+    redrawTilemap();
+    resizeEntities();
+    redrawEntities();
   }, 250);
 };
 
@@ -49,17 +54,22 @@ let shouldRunGameLoopScreenResize = false;
 
 // Handle one requestAnimationFrame step - this is one individual step within the main game loop
 function gameLoop(timeStamp) {
-  // Resize the canvas element to fit the container's height/width
-  resize();
+  // Resize + redraw tilemap layer
+  if (shouldRunGameLoopScreenResize) {
+    resizeTilemap();
+    redrawTilemap();
+    console.log("redraw tilemap");
+  }
 
-  // Redraw the canvas element to match the new height/width + redraw child elements
-  redraw();
+  // Resize + redraw entities layer
+  resizeEntities();
+  redrawEntities();
 
   // Calculate the game loop's FPS
   calculateFPS(timeStamp);
 
   // Log the size/width of the canvas + container (if debug boolean is enabled)
-  if (shouldLogResizeSize) console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+  if (shouldLogResizeSize) console.log("RESIZE: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
 
   // If the game loop is set to continue, run another individual step
   if (shouldRunGameLoopOverride || shouldRunGameLoopScreenResize) {
@@ -163,60 +173,70 @@ function endFPS() {
 }
 
 /*
- * Handling Resizing
+ * Handling Resizing - Tile Map Layer & Entities Layer
  */
 
-// Handle Resize Call
-function resize() {
-  canvas.width = container.clientWidth;
-  canvas.height = container.clientHeight;
+// Resize Tilemap Layer
+function resizeTilemap() {
+  tilemapCanvas.width = container.clientWidth;
+  tilemapCanvas.height = container.clientHeight;
+}
+
+// Resize Entities Layer
+function resizeEntities() {
+  entityCanvas.width = container.clientWidth;
+  entityCanvas.height = container.clientHeight;
 }
 
 /*
- * Handle Drawing
+ * Handle Drawing - Tile Map Layer
  */
 
-// Main Redraw Function
-function redraw() {
-  // Get canvas context + set horizontal/vertical scale factor
-  const ctx = canvas.getContext("2d");
+let hasGeneratedInitialTilemap = false;
+let hasGeneratedOffScreenCanvas = false;
+let offScreenCanvas;
+
+// Main Redraw Function - Tilemap Layer
+function redrawTilemap() {
+  // Get canvas context + ensure horizontal/vertical scale is fixed to a 1:1 ratio
+  const ctx = tilemapCanvas.getContext("2d");
   ctx.scale(1, 1);
 
-  // Draw elements
-  drawTilemap(ctx);
-  drawBorder(ctx);
-  drawRectangle(ctx);
-}
-
-// Draw Border
-function drawBorder(ctx) {
-  ctx.strokeStyle = 'black';
-  ctx.lineWidth = '10';
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
-}
-
-// Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
-let positionX = 15;
-let minXPosition = 15;
-let maxXPosition = 200;
-let speedX = 1;
-function drawRectangle(ctx) {
-  // Update rectangle position x
-  positionX = positionX + speedX;
-  if (positionX > maxXPosition || positionX < minXPosition) {
-    speedX = speedX * (-1);
+  // Check if we have already generated tilemap offscreen, if so copy to main context, otherwise re-draw
+  if (hasGeneratedInitialTilemap == false) {
+    generateInitialTilemap();
+    drawOffScreenTilemap();
+  } else {
+    drawOffScreenTilemap();
   }
-
-  // Update rectangle position y
-  positionY = canvas.height - 35;
-
-  // Draw rectangle
-  ctx.fillStyle = 'blue';
-  ctx.rect(positionX, positionY, 20, 20);
-  ctx.fill();
 }
 
-// Draw Tilemap
+// Step 1 - Generate the tilemap's off screen canvas element
+// Generate the initial tile map on an offscreen canvas for efficient recall later
+function generateInitialTilemap() {
+  hasGeneratedInitialTilemap = true;
+
+  if (hasGeneratedOffScreenCanvas == false) {
+    // Generate off screen canvas
+    offScreenCanvas = document.createElement('canvas');
+    offScreenCanvas.width = tilemapCanvas.width;
+    offScreenCanvas.height = tilemapCanvas.height;
+
+    // Flip boolean toggle indicating creation of off screen canvas
+    hasGeneratedOffScreenCanvas = true;
+
+    // Draw off screen tilemap
+    const ctx = offScreenCanvas.getContext("2d");
+    drawTilemap(ctx)
+  } else {
+    // Draw off screen tilemap
+    const ctx = offScreenCanvas.getContext("2d");
+    drawTilemap(ctx)
+  }
+}
+
+// Step 2 - Draw the initial tilemap onto the off screen canvas element
+// Draw tilemap
 function drawTilemap(ctx) {
   // Retrieve tilemap generator variables
   let map = tilemapGenerator.retrieveMap();
@@ -236,4 +256,53 @@ function drawTilemap(ctx) {
       ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
     }
   }
+}
+
+// Step 3 - Bring the off screen canvas element's tilemap to the on screen canvas element for visual display
+// Copy the offscreen tilemap that we generated and drew already
+function drawOffScreenTilemap() {
+  const ctx = tilemapCanvas.getContext("2d");
+  ctx.drawImage(offScreenCanvas, 0, 0);
+}
+
+/*
+ * Handle Drawing - Entities Layer
+ */
+
+// Main Redraw Function - Entities Layer
+function redrawEntities() {
+  // Get canvas context + ensure horizontal/vertical scale is fixed to a 1:1 ratio
+  const ctx = entityCanvas.getContext("2d");
+  ctx.scale(1, 1);
+
+  drawBorder(ctx);
+  drawRectangle(ctx);
+}
+
+// Draw Border
+function drawBorder(ctx) {
+  ctx.strokeStyle = 'black';
+  ctx.lineWidth = '10';
+  ctx.strokeRect(0, 0, entityCanvas.width, entityCanvas.height);
+}
+
+// Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
+let positionX = 15;
+let minXPosition = 15;
+let maxXPosition = 200;
+let speedX = 1;
+function drawRectangle(ctx) {
+  // Update rectangle position x
+  positionX = positionX + speedX;
+  if (positionX > maxXPosition || positionX < minXPosition) {
+    speedX = speedX * (-1);
+  }
+
+  // Update rectangle position y
+  positionY = entityCanvas.height - 35;
+
+  // Draw rectangle
+  ctx.fillStyle = 'blue';
+  ctx.rect(positionX, positionY, 20, 20);
+  ctx.fill();
 }
