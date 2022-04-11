@@ -2,7 +2,7 @@
  * This script handles panning around the tilemap by listening for mouse/touch drag events
  */
 
-const logMouseEventsDebug = false;
+const logEventsDebug = false;
 
 let canvasContainer = document.getElementById('canvas-container');
 
@@ -38,7 +38,9 @@ function isTouchDevice() {
 if(isTouchDevice()){
   /* Listen for touch events - this is a touch screen */
 
-  console.log("I am a touch screen device");
+  if (logEventsDebug) console.log("I am a touch screen device");
+
+
 } else {
   /* Listen for mouse events - not a touch screen */
 
@@ -47,7 +49,7 @@ if(isTouchDevice()){
     x = e.offsetX;
     y = e.offsetY;
 
-    if (logMouseEventsDebug) console.log("Mouse Down.")
+    if (logEventsDebug) console.log("Mouse Down.")
   })
 
   canvasContainer.addEventListener("mousemove", function(e) {
@@ -56,7 +58,7 @@ if(isTouchDevice()){
       x = e.offsetX;
       y = e.offsetY;
 
-      if (logMouseEventsDebug) console.log("Mouse Move.")
+      if (logEventsDebug) console.log("Mouse Move.")
     }
   })
 
@@ -67,14 +69,14 @@ if(isTouchDevice()){
       x = 0;
       y = 0;
 
-      if (logMouseEventsDebug) console.log("Mouse Up.")
+      if (logEventsDebug) console.log("Mouse Up.")
     }
   })
 
   canvasContainer.addEventListener('dblclick', function (e) {
     context.clearRect(0, 0, drawableCanvas.width, drawableCanvas.height);
 
-    if (logMouseEventsDebug) console.log("Double Click!")
+    if (logEventsDebug) console.log("Double Click!")
   });
 }
 
