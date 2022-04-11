@@ -83,18 +83,41 @@ const refreshRate = 1000 / 60;
 let shouldRunGameLoopScreenResize = false;
 
 // Animation loop override - run loop constantly
-let shouldRunGameLoopOverride = true;
-if (shouldRunGameLoopOverride) window.requestAnimationFrame(step);
+let shouldRunGameLoopOverride = false;
+if (shouldRunGameLoopOverride) startGameLoopOverride();
 
 // Handle one requestAnimationFrame step - this is one individual step within the main game loop
-function step() {
+function gameLoop(timeStamp) {
+  // Resize the canvas element to fit the container's height/width
   resize();
+
+  // Redraw the canvas element to match the new height/width + redraw child elements
   redraw();
+
+  // Calculate the game loop's FPS
+  calculateFPS(timeStamp);
+
+  // Log the size/width of the canvas + container (if debug boolean is enabled)
   if (shouldLogDraws) console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+
+  // If the game loop is set to continue, run another individual step
   if (shouldRunGameLoopOverride || shouldRunGameLoopScreenResize) {
-    // The game loop should continue, run another step
-    window.requestAnimationFrame(step);
+    window.requestAnimationFrame(gameLoop);
+  } else {
+    // game loop is ending, update FPS counter to reflect no current FPS updates
+    endFPS();
   }
+}
+
+// Game loop override - begin the game loop
+function startGameLoopOverride() {
+  shouldRunGameLoopOverride = true;
+  window.requestAnimationFrame(gameLoop);
+}
+
+// Game loop override - stop the game loop (unless another event fires a temporary update)
+function endGameLoopOverride() {
+  shouldRunGameLoopOverride = false;
 }
 
 // Screen started resizing - run game loop
@@ -103,7 +126,7 @@ function screenResizeStarted() {
     // Begin resizing / animation loop
     shouldRunGameLoopScreenResize = true;
     // Run game loop if we aren't already running loop due to override
-    if (!shouldRunGameLoopOverride) window.requestAnimationFrame(step);
+    if (!shouldRunGameLoopOverride) window.requestAnimationFrame(gameLoop);
     if (shouldLogDraws) console.warn("start");
   }
 }
@@ -118,13 +141,17 @@ function screenResizeEnded() {
 }
 
 // Listen For Window Resize + Immediately Resize/Redraw + Debounced Log Resize To Console
-const debouncedHandler = debounce(screenResizeEnded, 250);
+const screenResizeEndedDebounced = debounce(screenResizeEnded, 250);
 window.addEventListener('resize', () => {
   screenResizeStarted();
-	debouncedHandler();
+	screenResizeEndedDebounced();
 });
 
-// Initiate Debounce Timer
+/*
+ * Game Loop Helper Functions
+ */
+
+// Debounce event handler with timer
 function debounce(func, time){
     var time = time || 100; // 100 by default if no param
     var timer;
@@ -132,4 +159,30 @@ function debounce(func, time){
         if(timer) clearTimeout(timer);
         timer = setTimeout(func, time, event);
     };
+}
+
+// Calculate + display FPS
+let fpsElement = document.getElementById("fps");
+let oldTimeStamp;
+
+function calculateFPS(timeStamp) {
+  // Calculate the number of seconds passed since the last frame
+  let secondsPassed = (timeStamp - oldTimeStamp) / 1000;
+  oldTimeStamp = timeStamp;
+
+  // Check to make sure this isn't a super large value (restart of game loop)
+  if (secondsPassed <= 0.1) {
+    // Calculate FPS
+    let fps = Math.round(1 / secondsPassed);
+
+    // Display FPS on debug window
+    if (!isNaN(fps)) {
+      fpsElement.innerHTML = `FPS: ${fps}`;
+    } 
+  }
+}
+
+// Reset FPS counter to blank
+function endFPS() {
+  fpsElement.innerHTML = "FPS: --";
 }

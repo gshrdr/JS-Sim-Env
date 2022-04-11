@@ -115,11 +115,11 @@ body {
   position: absolute;
   top: 0;
   left: 0;
-  height: 35px;
   width: 250px;
   background-color: rgba(0, 0, 0, 0.45);
 }
 
 .debug-container p {
   margin: 0;
+  padding: 10px;
 }
