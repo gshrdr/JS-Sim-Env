@@ -6,10 +6,10 @@
 let container = document.getElementById('canvas-container');
 let canvas = document.getElementById("primary-canvas");
 
-// Boolean flag to determine if we should output a draw log to the console
-// Note - if this flag is enabled and the console is open, the constant output causes the browser to be laggy
-// It is recommended to set this flag to false for production builds.
-const shouldLogDraws = false;
+// Boolean flag to determine if we should output logs to the console
+const shouldLogInitialDraw = false; // Log initial screen size information
+const shouldLogResizeSize = false;  // Log screen size during each game loop frame - note, this is laggy and should be set to false for deployment
+const shouldLogScreenResizeEvents = false; // Log an update whenever the screen starts or stops resizing
 
 /*
  * Handle Drawing
@@ -58,15 +58,15 @@ function resize() {
 }
 
 // Load Initial Canvas On Window Load
-window.onload = function(){
+window.onload = function() {
   // Initial Draw Call + Resize
-  if (shouldLogDraws) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+  if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
   resize();
   redraw();
 
   // Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
   setTimeout(function() {
-    if (shouldLogDraws) console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+    if (shouldLogInitialDraw) console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
     resize();
     redraw();
   }, 250);
@@ -76,15 +76,12 @@ window.onload = function(){
  * Main Game / Animation Loop
  */
 
-// Animation loop variables
-const refreshRate = 1000 / 60;
-
-// Animaton loop run/pause due to screen resize
-let shouldRunGameLoopScreenResize = false;
-
 // Animation loop override - run loop constantly
 let shouldRunGameLoopOverride = false;
 if (shouldRunGameLoopOverride) startGameLoopOverride();
+
+// Animaton loop run/pause due to screen resize
+let shouldRunGameLoopScreenResize = false;
 
 // Handle one requestAnimationFrame step - this is one individual step within the main game loop
 function gameLoop(timeStamp) {
@@ -98,7 +95,7 @@ function gameLoop(timeStamp) {
   calculateFPS(timeStamp);
 
   // Log the size/width of the canvas + container (if debug boolean is enabled)
-  if (shouldLogDraws) console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+  if (shouldLogResizeSize) console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
 
   // If the game loop is set to continue, run another individual step
   if (shouldRunGameLoopOverride || shouldRunGameLoopScreenResize) {
@@ -127,7 +124,7 @@ function screenResizeStarted() {
     shouldRunGameLoopScreenResize = true;
     // Run game loop if we aren't already running loop due to override
     if (!shouldRunGameLoopOverride) window.requestAnimationFrame(gameLoop);
-    if (shouldLogDraws) console.warn("start");
+    if (shouldLogScreenResizeEvents) console.warn("Begin resizing event.");
   }
 }
 
@@ -136,7 +133,7 @@ function screenResizeEnded() {
   if (shouldRunGameLoopScreenResize) {
     // End resizing / animation loop
     shouldRunGameLoopScreenResize = false;
-    if (shouldLogDraws) console.warn("end");
+    if (shouldLogScreenResizeEvents) console.warn("End resizing event.");
   }
 }
 
@@ -163,7 +160,9 @@ function debounce(func, time){
 
 // Calculate + display FPS
 let fpsElement = document.getElementById("fps");
-let oldTimeStamp;
+let oldTimeStamp; // Last time stamp of FPS check
+let lastFpsUpdateTimeStamp; // Last time stamp of FPS display update
+let fpsUpdateInterval = 0.1; // FPS display update interval - don't update FPS counter @ 60hz, do it slower
 
 function calculateFPS(timeStamp) {
   // Calculate the number of seconds passed since the last frame
@@ -175,10 +174,22 @@ function calculateFPS(timeStamp) {
     // Calculate FPS
     let fps = Math.round(1 / secondsPassed);
 
-    // Display FPS on debug window
-    if (!isNaN(fps)) {
-      fpsElement.innerHTML = `FPS: ${fps}`;
-    } 
+    // Determine if we should update the FPS display
+    if (lastFpsUpdateTimeStamp == null) {
+      // No previous FPS update time stamp, set for next iteration
+      lastFpsUpdateTimeStamp = timeStamp;
+    } else {
+      // Determine period of time since last FPS update
+      let secondsPassedFpsUpdate = (timeStamp - lastFpsUpdateTimeStamp) / 1000;
+      if (secondsPassedFpsUpdate >= fpsUpdateInterval) {
+        // It's been a while since an FPS display update.... display FPS on debug window + update display time stamp
+        lastFpsUpdateTimeStamp = timeStamp;
+        if (!isNaN(fps)) {
+          if (fps > 60) { fps = 60; }
+          fpsElement.innerHTML = `FPS: ${fps}`;
+        }
+      }
+    }
   }
 }
 
