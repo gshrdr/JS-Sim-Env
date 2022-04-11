@@ -2,6 +2,10 @@
  * This script ensures the primary canvas element resizes to fill the viewport for the main content container of the page.
  */
 
+// Primary canvas & container elements
+let container = document.getElementById('canvas-container');
+let canvas = document.getElementById("primary-canvas");
+
 // Boolean flag to determine if we should output a draw log to the console
 // Note - if this flag is enabled and the console is open, the constant output causes the browser to be laggy
 // It is recommended to set this flag to false for production builds.
@@ -53,63 +57,70 @@ function resize() {
   canvas.height = container.clientHeight;
 }
 
-// Initial Draw Call + Resize
-let container = document.getElementById('canvas-container');
-let canvas = document.getElementById("primary-canvas");
-if (shouldLogDraws) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-resize();
-redraw();
-
-// Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
+// Load Initial Canvas On Window Load
 window.onload = function(){
-   setTimeout(function() {
-     if (shouldLogDraws) console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-     resize();
-     redraw();
-   }, 500);
+  // Initial Draw Call + Resize
+  if (shouldLogDraws) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+  resize();
+  redraw();
+
+  // Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
+  setTimeout(function() {
+    if (shouldLogDraws) console.log("DRAW AGAIN: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
+    resize();
+    redraw();
+  }, 250);
 };
 
 /*
- * Main Animation Loop
+ * Main Game / Animation Loop
  */
 
-// Animation Loop Variables
+// Animation loop variables
 const refreshRate = 1000 / 60;
-let shouldRunAnimationLoop = false;
 
-// Handle one requestAnimationFrame step
+// Animaton loop run/pause due to screen resize
+let shouldRunGameLoopScreenResize = false;
+
+// Animation loop override - run loop constantly
+let shouldRunGameLoopOverride = true;
+if (shouldRunGameLoopOverride) window.requestAnimationFrame(step);
+
+// Handle one requestAnimationFrame step - this is one individual step within the main game loop
 function step() {
   resize();
   redraw();
   if (shouldLogDraws) console.log("RESIZE: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-  if (shouldRunAnimationLoop) {
+  if (shouldRunGameLoopOverride || shouldRunGameLoopScreenResize) {
+    // The game loop should continue, run another step
     window.requestAnimationFrame(step);
   }
 }
 
-// Start animation loop (such as when the screen begins resizing)
-function startAnimationFrame() {
-  if (shouldRunAnimationLoop == false) {
+// Screen started resizing - run game loop
+function screenResizeStarted() {
+  if (shouldRunGameLoopScreenResize == false) {
     // Begin resizing / animation loop
-    shouldRunAnimationLoop = true;
-    window.requestAnimationFrame(step);
+    shouldRunGameLoopScreenResize = true;
+    // Run game loop if we aren't already running loop due to override
+    if (!shouldRunGameLoopOverride) window.requestAnimationFrame(step);
     if (shouldLogDraws) console.warn("start");
   }
 }
 
-// End animation loop (such as when the screen stops resizing)
-function endAnimationFrame() {
-  if (shouldRunAnimationLoop) {
+// Screen ended resizing - pause game loop (unless override is enabled)
+function screenResizeEnded() {
+  if (shouldRunGameLoopScreenResize) {
     // End resizing / animation loop
-    shouldRunAnimationLoop = false;
+    shouldRunGameLoopScreenResize = false;
     if (shouldLogDraws) console.warn("end");
   }
 }
 
 // Listen For Window Resize + Immediately Resize/Redraw + Debounced Log Resize To Console
-const debouncedHandler = debounce(endAnimationFrame, 250);
+const debouncedHandler = debounce(screenResizeEnded, 250);
 window.addEventListener('resize', () => {
-  startAnimationFrame();
+  screenResizeStarted();
 	debouncedHandler();
 });
 
