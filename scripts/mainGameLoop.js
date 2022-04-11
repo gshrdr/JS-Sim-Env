@@ -98,7 +98,7 @@ function screenResizeStarted() {
     // Begin resizing / animation loop
     shouldRunGameLoopScreenResize = true;
     // Run game loop if we aren't already running loop due to override
-    if (!shouldRunGameLoopOverride) window.requestAnimationFrame(gameLoop);
+    if (shouldRunGameLoopOverride == false) window.requestAnimationFrame(gameLoop);
     if (shouldLogScreenResizeEvents) console.warn("Begin resizing event.");
   }
 }
@@ -164,7 +164,7 @@ function calculateFPS(timeStamp) {
         // It's been a while since an FPS display update.... display FPS on debug window + update display time stamp
         lastFpsUpdateTimeStamp = timeStamp;
         if (!isNaN(fps)) {
-          if (fps > 60) { fps = 60; }
+          // if (fps > 60) { fps = 60; }
           fpsElement.innerHTML = `FPS: ${fps}`;
         }
       }
@@ -268,7 +268,7 @@ function drawTilemap(ctx) {
   for (let col = 0; col < mapSize.height; col += 1) {
     for (let row = 0; row < mapSize.width; row += 1) {
       // Tile
-      ctx.fillStyle = "green";
+      ctx.fillStyle = Math.floor(Math.random()*16777215).toString(16);
       ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
 
       // Grid
@@ -322,8 +322,13 @@ function drawRectangle(ctx) {
   // Update rectangle position y
   positionY = entityCanvas.height - 35;
 
-  // Draw rectangle
+  // Draw rectangle - solid fill
   ctx.fillStyle = 'blue';
   ctx.rect(positionX, positionY, 20, 20);
   ctx.fill();
+
+  // Draw rectangle - border
+  ctx.strokeStyle = 'white';
+  ctx.lineWidth = '2';
+  ctx.strokeRect(positionX, positionY, 20, 20);
 }

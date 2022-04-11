@@ -2,6 +2,8 @@
  * This script handles panning around the tilemap by listening for mouse/touch drag events
  */
 
+const logMouseEventsDebug = false;
+
 let canvasContainer = document.getElementById('canvas-container');
 
 const drawableCanvas = document.getElementById('drawable-canvas');
@@ -27,7 +29,7 @@ canvasContainer.addEventListener("mousedown", function(e) {
   x = e.offsetX;
   y = e.offsetY;
 
-  console.log("Mouse Down.")
+  if (logMouseEventsDebug) console.log("Mouse Down.")
 })
 
 canvasContainer.addEventListener("mousemove", function(e) {
@@ -36,7 +38,7 @@ canvasContainer.addEventListener("mousemove", function(e) {
     x = e.offsetX;
     y = e.offsetY;
 
-    console.log("Mouse Move.")
+    if (logMouseEventsDebug) console.log("Mouse Move.")
   }
 })
 
@@ -47,12 +49,14 @@ canvasContainer.addEventListener("mouseup", function(e) {
     x = 0;
     y = 0;
 
-    console.log("Mouse Up.")
+    if (logMouseEventsDebug) console.log("Mouse Up.")
   }
 })
 
 canvasContainer.addEventListener('dblclick', function (e) {
-  console.log("Double Click!")
+  context.clearRect(0, 0, drawableCanvas.width, drawableCanvas.height);
+
+  if (logMouseEventsDebug) console.log("Double Click!")
 });
 
 function drawLine(context, x1, y1, x2, y2) {
