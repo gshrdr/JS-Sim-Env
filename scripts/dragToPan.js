@@ -2,6 +2,10 @@
  * This script handles panning around the tilemap by listening for mouse/touch drag events
  */
 
+ // TO DO - Rather than using touch events to draw to a third canvas element, remove this canvas element and use
+ // the drag events to move/pan the camera around the tile map
+ // Scrolling camera tutorial: https://gamedev.stackexchange.com/questions/86820/how-do-i-make-a-scrolling-map-within-an-html5-canvas
+
 const logEventsDebug = false;
 
 let canvasContainer = document.getElementById('canvas-container');
@@ -40,6 +44,8 @@ if(isTouchDevice()){
 
   if (logEventsDebug) console.log("I am a touch screen device");
 
+  // TO DO - Touch event handling
+  // https://developer.mozilla.org/en-US/docs/Web/API/Touch_events/Using_Touch_Events
 
 } else {
   /* Listen for mouse events - not a touch screen */

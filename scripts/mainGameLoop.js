@@ -14,6 +14,7 @@ let tilemapGenerator;
 const shouldLogInitialDraw = false; // Log initial screen size information
 const shouldLogResizeSize = false;  // Log screen size during each game loop frame - note, this is laggy and should be set to false for deployment
 const shouldLogScreenResizeEvents = false; // Log an update whenever the screen starts or stops resizing
+const shouldLogTilemapRegeneration = false; // Log when the tilemap is regenerated and redrawn
 
 /*
  * Overall Application Entry Point
@@ -287,6 +288,8 @@ function drawTilemap(ctx) {
       ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
     }
   }
+
+  if (shouldLogTilemapRegeneration) console.warn("Tilemap completely regenerated and redrawn.")
 }
 
 // Step 3 - Bring the off screen canvas element's tilemap to the on screen canvas element for visual display
@@ -294,6 +297,8 @@ function drawTilemap(ctx) {
 function drawOffScreenTilemap() {
   const ctx = tilemapCanvas.getContext("2d");
   ctx.drawImage(offScreenCanvas, 0, 0);
+
+  if (shouldLogTilemapRegeneration) console.log("Tilemap offscreen context copied to screen.")
 }
 
 /*
@@ -318,8 +323,8 @@ function drawBorder(ctx) {
 }
 
 // Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
-let positionX = 15;
-let minXPosition = 15;
+let positionX = 20;
+let minXPosition = 20;
 let maxXPosition = 200;
 let speedX = 1;
 function drawRectangle(ctx) {
@@ -330,15 +335,15 @@ function drawRectangle(ctx) {
   }
 
   // Update rectangle position y
-  positionY = entityCanvas.height - 35;
+  positionY = entityCanvas.height - 50;
 
   // Draw rectangle - solid fill
-  ctx.fillStyle = 'blue';
-  ctx.rect(positionX, positionY, 20, 20);
+  ctx.fillStyle = 'red';
+  ctx.rect(positionX, positionY, 30, 30);
   ctx.fill();
 
   // Draw rectangle - border
   ctx.strokeStyle = 'white';
-  ctx.lineWidth = '2';
-  ctx.strokeRect(positionX, positionY, 20, 20);
+  ctx.lineWidth = '4';
+  ctx.strokeRect(positionX, positionY, 30, 30);
 }
