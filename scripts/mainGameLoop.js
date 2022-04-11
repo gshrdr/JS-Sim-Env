@@ -1,5 +1,5 @@
 /*
- * This script ensures the primary canvas element resizes to fill the viewport for the main content container of the page.
+ * This script contains the main game loop that resizes and redraws the contents of the canvas element.
  */
 
 // Primary canvas & container elements
