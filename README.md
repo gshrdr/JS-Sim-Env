@@ -31,7 +31,6 @@ These are the sources, tutorials, and code docs I used to build this project:
 * [Mozilla Docs - HTML5 Canvas Rendering](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D)
 * [Joe Iddon JavaScript TileMap Perlin Noise Tutorial](https://joeiddon.github.io/projects/javascript/perlin.html)
 * [JavaScript TileMap Rendering Tutorial](https://stackoverflow.com/questions/21844451/render-a-tile-map-using-javascript)
-* [Fixing HTML5 Blurry Canvas Resizing](https://medium.com/@doomgoober/understanding-html-canvas-scaling-and-sizing-c04925d9a830)
 * [JavaScript Automatically Resize/Scale HTML5 Canvas](https://stackoverflow.com/questions/1664785/resize-html5-canvas-to-fit-window)
 * [Evolv.io Simulator Inspiration - CaryKH](https://www.youtube.com/watch?v=OLnv8QaEDL0)
 * [Evolution Simulator Inspiration - InderPabla](https://github.com/InderPabla/EvolutionSimulator-NeuralNetwork-GeneticAlgorithm)

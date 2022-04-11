@@ -99,8 +99,6 @@ function generateTilemap() {
 
 // Draw the tilemap
 let mapIndex = 0;
-let sourceX = 0;
-let sourceY = 0;
 
 function drawLandscape() {
   for (let col = 0; col < mapHeight; col += tileSize) {

@@ -6,59 +6,23 @@
 let container = document.getElementById('canvas-container');
 let canvas = document.getElementById("primary-canvas");
 
+// Tilemap generator object
+let tilemapGenerator;
+
 // Boolean flag to determine if we should output logs to the console
 const shouldLogInitialDraw = false; // Log initial screen size information
 const shouldLogResizeSize = false;  // Log screen size during each game loop frame - note, this is laggy and should be set to false for deployment
 const shouldLogScreenResizeEvents = false; // Log an update whenever the screen starts or stops resizing
 
 /*
- * Handle Drawing
+ * Overall Application Entry Point
  */
-
-// Main Redraw Function
-function redraw() {
-  const ctx = canvas.getContext("2d");
-  drawBorder(ctx);
-  drawRectangle(ctx);
-}
-
-// Draw Border
-function drawBorder(ctx) {
-  ctx.strokeStyle = 'blue';
-  ctx.lineWidth = '5';
-  ctx.strokeRect(0, 0, canvas.width, canvas.height);
-}
-
-// Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
-let positionX = 50;
-let minXPosition = 50;
-let maxXPosition = 400;
-let speedX = 1;
-function drawRectangle(ctx) {
-  // Update Rectangle Position
-  positionX = positionX + speedX;
-  if (positionX > maxXPosition || positionX < minXPosition) {
-    speedX = speedX * (-1);
-  }
-
-  // Draw Rectangle
-  ctx.fillStyle = 'green';
-  ctx.rect(positionX, 50, 150, 75);
-  ctx.fill();
-}
-
-/*
- * Handling Resizing
- */
-
-// Handle Resize Call
-function resize() {
-  canvas.width = container.clientWidth;
-  canvas.height = container.clientHeight;
-}
 
 // Load Initial Canvas On Window Load
 window.onload = function() {
+  // Setup tilemap generator
+  tilemapGenerator = new TilemapGenerator(50, 50);
+
   // Initial Draw Call + Resize
   if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + canvas.width + " Canvas Height: " + canvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
   resize();
@@ -77,7 +41,7 @@ window.onload = function() {
  */
 
 // Animation loop override - run loop constantly
-let shouldRunGameLoopOverride = false;
+let shouldRunGameLoopOverride = true;
 if (shouldRunGameLoopOverride) startGameLoopOverride();
 
 // Animaton loop run/pause due to screen resize
@@ -196,4 +160,78 @@ function calculateFPS(timeStamp) {
 // Reset FPS counter to blank
 function endFPS() {
   fpsElement.innerHTML = "FPS: --";
+}
+
+/*
+ * Handling Resizing
+ */
+
+// Handle Resize Call
+function resize() {
+  canvas.width = container.clientWidth;
+  canvas.height = container.clientHeight;
+}
+
+/*
+ * Handle Drawing
+ */
+
+// Main Redraw Function
+function redraw() {
+  // Get canvas context + set horizontal/vertical scale factor
+  const ctx = canvas.getContext("2d");
+  ctx.scale(1, 1);
+
+  // Draw elements
+  drawTilemap(ctx);
+  drawBorder(ctx);
+  drawRectangle(ctx);
+}
+
+// Draw Border
+function drawBorder(ctx) {
+  ctx.strokeStyle = 'blue';
+  ctx.lineWidth = '5';
+  ctx.strokeRect(0, 0, canvas.width, canvas.height);
+}
+
+// Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
+let positionX = 50;
+let minXPosition = 50;
+let maxXPosition = 400;
+let speedX = 1;
+function drawRectangle(ctx) {
+  // Update Rectangle Position
+  positionX = positionX + speedX;
+  if (positionX > maxXPosition || positionX < minXPosition) {
+    speedX = speedX * (-1);
+  }
+
+  // Draw Rectangle
+  ctx.fillStyle = 'blue';
+  ctx.rect(positionX, 50, 150, 75);
+  ctx.fill();
+}
+
+/*
+ * Draw tilemap
+ */
+
+function drawTilemap(ctx) {
+  // Retrieve tilemap generator variables
+  let map = tilemapGenerator.retrieveMap();
+  let mapSize = tilemapGenerator.retrieveMapSize();
+  let tileSize = tilemapGenerator.retrieveTileSize();
+
+  // Draw grid
+  for (let col = 0; col < mapSize.height; col += 1) {
+    for (let row = 0; row < mapSize.width; row += 1) {
+      ctx.fillStyle = "green";
+      ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
+
+      ctx.strokeStyle = "#000";
+      ctx.lineWidth = 1;
+      ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
+    }
+  }
 }
