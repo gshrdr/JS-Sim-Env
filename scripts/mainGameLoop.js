@@ -22,7 +22,7 @@ const shouldLogScreenResizeEvents = false; // Log an update whenever the screen 
 // Load Initial Canvas On Window Load
 window.onload = function() {
   // Setup tilemap generator
-  tilemapGenerator = new TilemapGenerator(50, 50);
+  tilemapGenerator = new TilemapGenerator(300, 150);
 
   // Initial Draw Call + Resize
   if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
@@ -60,7 +60,6 @@ function gameLoop(timeStamp) {
   if (shouldRunGameLoopScreenResize) {
     resizeTilemap();
     redrawTilemap();
-    console.log("redraw tilemap");
   }
 
   // Resize + redraw entities layer
@@ -110,6 +109,10 @@ function screenResizeEnded() {
     // End resizing / animation loop
     shouldRunGameLoopScreenResize = false;
     if (shouldLogScreenResizeEvents) console.warn("End resizing event.");
+
+    // Re-draw tilemap
+    resizeTilemap();
+    redrawTilemap(true);
   }
 }
 
@@ -199,7 +202,7 @@ let hasGeneratedOffScreenCanvas = false;
 let offScreenCanvas;
 
 // Main Redraw Function - Tilemap Layer
-function redrawTilemap() {
+function redrawTilemap(shouldRegenerate = false) {
   // Get canvas context + ensure horizontal/vertical scale is fixed to a 1:1 ratio
   const ctx = tilemapCanvas.getContext("2d");
   ctx.scale(1, 1);
@@ -209,7 +212,12 @@ function redrawTilemap() {
     generateInitialTilemap();
     drawOffScreenTilemap();
   } else {
-    drawOffScreenTilemap();
+    if (shouldRegenerate) {
+      generateInitialTilemap();
+      drawOffScreenTilemap();
+    } else {
+      drawOffScreenTilemap();
+    }
   }
 }
 
@@ -227,12 +235,23 @@ function generateInitialTilemap() {
     // Flip boolean toggle indicating creation of off screen canvas
     hasGeneratedOffScreenCanvas = true;
 
-    // Draw off screen tilemap
+    // Get off screen context
     const ctx = offScreenCanvas.getContext("2d");
+
+    // Draw off screen tilemap
     drawTilemap(ctx)
   } else {
-    // Draw off screen tilemap
+    // Get off screen context
     const ctx = offScreenCanvas.getContext("2d");
+
+    // Clear canvas
+    ctx.clearRect(0, 0, offScreenCanvas.width, offScreenCanvas.height);
+
+    // Update off screen canvas size
+    offScreenCanvas.width = tilemapCanvas.width;
+    offScreenCanvas.height = tilemapCanvas.height;
+
+    // Draw off screen tilemap
     drawTilemap(ctx)
   }
 }

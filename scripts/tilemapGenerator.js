@@ -11,7 +11,7 @@ class TilemapGenerator {
     this.width = width;
 
     // Set tile size
-    this.tileSize = 20;
+    this.tileSize = 10;
 
     // Generate empty array for the terrain map
     this.map = new Array(height);
