@@ -26,20 +26,22 @@ window.onload = function() {
 
   // Initial Draw Call + Resize
   if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-  resizeTilemap();
-  redrawTilemap();
-  resizeEntities();
-  redrawEntities();
+  initialLoad();
 
   // Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
   setTimeout(function() {
     if (shouldLogInitialDraw) console.log("DRAW AGAIN: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-    resizeTilemap();
-    redrawTilemap();
-    resizeEntities();
-    redrawEntities();
+    initialLoad();
   }, 250);
 };
+
+// Resize + draw the initial layout
+function initialLoad() {
+  resizeTilemap();
+  redrawTilemap();
+  resizeEntities();
+  redrawEntities();
+}
 
 /*
  * Main Game / Animation Loop
@@ -136,7 +138,7 @@ function debounce(func, time){
 let fpsElement = document.getElementById("fps");
 let oldTimeStamp; // Last time stamp of FPS check
 let lastFpsUpdateTimeStamp; // Last time stamp of FPS display update
-let fpsUpdateInterval = 0.1; // FPS display update interval - don't update FPS counter @ 60hz, do it slower
+let fpsUpdateInterval = 0.5; // FPS display update interval - don't update FPS counter @ 60hz, do it slower
 
 function calculateFPS(timeStamp) {
   // Calculate the number of seconds passed since the last frame
