@@ -18,6 +18,7 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [x] Get a live code demo working, host this code demo on [gavinshr.com](https://gavinshr.com), include a link to this project with information & an image on my [projects page](https://gavinshr.com/projects), and update the live code demo link at the top of this ReadMe file
 - [x] Build a JavaScript update based game loop so I can update entities across the map programmatically 60x per second
 - [ ] Build a JavaScript based tile map engine to render my worlds complete with automatic resizing, cross-browser & mobile (touch) compatibility, the ability to select individual tiles with a mouse/touch input, the ability to scroll throughout the tile map with a chunk-based rendering system, and the ability to zoom in/out
+- [ ] Build a tilemap world generation engine complete with programmatically generated terrain and the ability to save/download your map and game data state
 - [ ] Explore a multi-player system with web sockets for a real time connection between multiple people playing/accessing the same game board
 - [ ] Explore a Redis cache database for super fast real-time data storage
 - [ ] Explore an XML/HTTP based REST API built with PHP for server communication
