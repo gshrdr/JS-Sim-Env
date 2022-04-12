@@ -103,7 +103,7 @@ if(isTouchDevice()){
       let current = Date.now() / 1000
       let timeDelta = current - recentTouchTimeStamp;
 
-      if((timeDelta < 0.15) && (timeDelta > 0)){
+      if((timeDelta < 0.22) && (timeDelta > 0)){
          // Double Tap - clear screen
          context.clearRect(0, 0, drawableCanvas.width, drawableCanvas.height);
 
