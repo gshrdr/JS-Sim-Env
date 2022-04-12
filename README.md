@@ -46,3 +46,4 @@ These are the sources, tutorials, and code docs I used to build this project:
 * [How To Properly Clear HTML5 Canvas](https://stackoverflow.com/questions/2142535/how-to-clear-the-canvas-for-redrawing)
 * [JavaScript Determine If Touch Enabled Device](https://stackoverflow.com/questions/4817029/whats-the-best-way-to-detect-a-touch-screen-device-using-javascript)
 * [JavaScript Random RGB Color](https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript)
+* [Game Development For The Web - Useful Info But Not Secure](http://blog.mrroa.com/game-development-for-the-web-series/)
