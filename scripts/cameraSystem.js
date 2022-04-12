@@ -6,7 +6,7 @@
  // the drag events to move/pan the camera around the tile map
  // Scrolling camera tutorial: https://gamedev.stackexchange.com/questions/86820/how-do-i-make-a-scrolling-map-within-an-html5-canvas
 
-const logEventsDebug = false;
+const logEventsDebug = true;
 
 let canvasContainer = document.getElementById('canvas-container');
 
@@ -14,6 +14,7 @@ const drawableCanvas = document.getElementById('drawable-canvas');
 const context = drawableCanvas.getContext('2d');
 
 let mouseIsCurrentlyDown = false;
+let recentTouchTimeStamp;
 
 let x = 0;
 let y = 0;
@@ -95,15 +96,14 @@ if(isTouchDevice()){
   /* Detect double touch - clear screen */
   // Source: https://stackoverflow.com/questions/8825144/detect-double-tap-on-ipad-or-iphone-screen-using-javascript
 
-  let recentTouchTimeStamp = null;
   function checkForDoubleTouch() {
-    if (recentTouchTimeStamp === null) {
-      recentTouchTimeStamp = new Date().getTime();
+    if (recentTouchTimeStamp === undefined) {
+      recentTouchTimeStamp = Date.now() / 1000;
     } else {
-      let current = new Date().getTime();
+      let current = Date.now() / 1000
       let timeDelta = current - recentTouchTimeStamp;
 
-      if((timeDelta < 250) && (timeDelta > 0)){
+      if((timeDelta < 0.15) && (timeDelta > 0)){
          // Double Tap - clear screen
          context.clearRect(0, 0, drawableCanvas.width, drawableCanvas.height);
 
@@ -115,7 +115,7 @@ if(isTouchDevice()){
          if (logEventsDebug) console.log("Double touch - clear screen")
       }
 
-      recentTouchTimeStamp = new Date().getTime();
+      recentTouchTimeStamp = Date.now() / 1000
     }
   }
 

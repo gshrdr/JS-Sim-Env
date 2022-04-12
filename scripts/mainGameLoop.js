@@ -11,10 +11,10 @@ let entityCanvas = document.getElementById("entity-canvas");
 let tilemapGenerator;
 
 // Boolean flag to determine if we should output logs to the console
-const shouldLogInitialDraw = false; // Log initial screen size information
-const shouldLogResizeSize = false;  // Log screen size during each game loop frame - note, this is laggy and should be set to false for deployment
-const shouldLogScreenResizeEvents = false; // Log an update whenever the screen starts or stops resizing
-const shouldLogTilemapRegeneration = false; // Log when the tilemap is regenerated and redrawn
+const shouldLogInitialDraw = true; // Log initial screen size information
+const shouldLogResizeSize = true;  // Log screen size during each game loop frame - note, this is laggy and should be set to false for deployment
+const shouldLogScreenResizeEvents = true; // Log an update whenever the screen starts or stops resizing
+const shouldLogTilemapRegeneration = true; // Log when the tilemap is regenerated and redrawn
 
 /*
  * Overall Application Entry Point
@@ -57,6 +57,9 @@ let shouldRunGameLoopScreenResize = false;
 
 // Handle one requestAnimationFrame step - this is one individual step within the main game loop
 function gameLoop(timeStamp) {
+  // Log
+  if (shouldRunGameLoopScreenResize && shouldLogScreenResizeEvents) { console.log("Resize tilemap/entity canvas | Copy tilemap offscreen context to screen") }
+
   // Resize + redraw tilemap layer
   if (shouldRunGameLoopScreenResize) {
     resizeTilemap();
@@ -64,14 +67,11 @@ function gameLoop(timeStamp) {
   }
 
   // Resize + redraw entities layer
-  resizeEntities();
+  if (shouldRunGameLoopScreenResize) resizeEntities();
   redrawEntities();
 
   // Calculate the game loop's FPS
   calculateFPS(timeStamp);
-
-  // Log the size/width of the canvas + container (if debug boolean is enabled)
-  if (shouldLogResizeSize) console.log("RESIZE: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
 
   // If the game loop is set to continue, run another individual step
   if (shouldRunGameLoopOverride || shouldRunGameLoopScreenResize) {
@@ -297,8 +297,6 @@ function drawTilemap(ctx) {
 function drawOffScreenTilemap() {
   const ctx = tilemapCanvas.getContext("2d");
   ctx.drawImage(offScreenCanvas, 0, 0);
-
-  if (shouldLogTilemapRegeneration) console.log("Tilemap offscreen context copied to screen.")
 }
 
 /*
@@ -311,6 +309,11 @@ function redrawEntities() {
   const ctx = entityCanvas.getContext("2d");
   ctx.scale(1, 1);
 
+  // Clear canvas
+  ctx.beginPath();
+  ctx.clearRect(0, 0, entityCanvas.width, entityCanvas.height);
+
+  // Draw entities
   drawBorder(ctx);
   drawRectangle(ctx);
 }
