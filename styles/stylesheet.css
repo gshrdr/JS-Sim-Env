@@ -119,6 +119,7 @@ canvas {
 
 #drawable-canvas {
   z-index: 3;
+  border: 1px solid white;
 }
 
 .debug-container {
