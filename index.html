@@ -20,6 +20,11 @@
     <script defer src="scripts/tilemapGenerator.js"></script>
     <script defer src="scripts/mainGameLoop.js"></script>
     <script defer src="scripts/cameraSystem.js"></script>
+    <script>
+      function testClick() {
+        console.log("Button Click!");
+      }
+    </script>
   </head>
 
   <body>
@@ -27,10 +32,14 @@
     <div class="box">
       <div class="row header">
         <div class="container">
-          <h1>Evolution App</h1>
-          <p>A JavaScript Based Evolution Simulation Environment.</p>
-          <a href="https://github.com/gshrdr/JS-Sim-Env" target="_blank" rel="noopener noreferrer">GitHub Source</a>
-          <a href="https://gavinshr.com" target="_blank" rel="noopener noreferrer">gavinshr.com</a>
+          <div class="container-top">
+            <h1>Evolution App</h1>
+            <p>A JavaScript Based Evolution Simulation Environment.</p>
+          </div>
+          <div class="container-critical">
+            <a href="https://github.com/gshrdr/JS-Sim-Env" target="_blank" rel="noopener noreferrer">GitHub Source</a>
+            <a href="https://gavinshr.com" target="_blank" rel="noopener noreferrer">gavinshr.com</a>
+          </div>
         </div>
       </div>
       <div class="row content">
@@ -38,10 +47,12 @@
           <canvas id="tilemap-canvas"></canvas>
           <canvas id="entity-canvas"></canvas>
           <canvas id="drawable-canvas"></canvas>
-          <div class="debug-container">
+          <div class="debug">
             <p id="fps">FPS: --</p>
           </div>
         </div>
+
+        <button id="menu-button" onclick="testClick();"></button>
       </div>
       <div class="row footer">
         <p>Copyright 2022 &copy; Gavin Shrader</p>

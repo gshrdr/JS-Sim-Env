@@ -165,7 +165,7 @@ function calculateFPS(timeStamp) {
         // It's been a while since an FPS display update.... display FPS on debug window + update display time stamp
         lastFpsUpdateTimeStamp = timeStamp;
         if (!isNaN(fps)) {
-          // if (fps > 60) { fps = 60; }
+          if (fps > 120) { fps = 120; }
           fpsElement.innerHTML = `FPS: ${fps}`;
         }
       }
@@ -283,7 +283,7 @@ function drawTilemap(ctx) {
       ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
 
       // Grid
-      ctx.strokeStyle = "#000";
+      ctx.strokeStyle = "black";
       ctx.lineWidth = 2;
       ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
     }
@@ -338,7 +338,7 @@ function drawRectangle(ctx) {
   }
 
   // Update rectangle position y
-  positionY = entityCanvas.height - 50;
+  positionY = 20;
 
   // Draw rectangle - solid fill
   ctx.fillStyle = 'red';

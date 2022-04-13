@@ -32,9 +32,10 @@ hr {
   margin: 10px;
 }
 
-h1 {
-  font-size: 30px;
+h1, h2, h3, h4, h5, h6 {
   color: white;
+  font-family: sans-serif;
+  font-weight: 800;
   margin: 10px;
 }
 
@@ -61,6 +62,7 @@ html,
 body {
   height: 100%;
   margin: 0;
+  overflow: hidden;
 }
 
 .box {
@@ -70,13 +72,17 @@ body {
 }
 
 .box .row.header {
-  border-bottom: 1px dotted grey;
-  padding: 10px;
+  padding: 4px;
   flex: 0 1 auto; /* Shorthand for: flex-grow: 0, flex-shrink: 1, flex-basis: auto */
 }
 
-.box .row.header .container {
+.box .row.header .container-top {
+  display: none;
   margin: 10px;
+}
+.box .row.header .container-critical {
+  margin: 10px;
+  float: right;
 }
 
 .box .row.content {
@@ -85,7 +91,7 @@ body {
 }
 
 .box .row.footer {
-  border-top: 1px dotted grey;
+  display: none;
   padding: 10px;
   flex: 0 1 40px;
 }
@@ -122,15 +128,74 @@ canvas {
   border: 1px solid white;
 }
 
-.debug-container {
-  z-index: 3;
-  position: absolute;
-  top: 0;
-  left: 0;
-  background-color: rgba(0, 0, 0, 1);
+/*
+ * Controls system
+ */
+
+.debug p {
+  margin: 0;
+  font-size: 12px;
+  padding: 8px;
 }
 
-.debug-container p {
-  margin: 0;
+.debug #fps {
+  z-index: 4;
+  position: absolute;
+  width: 70px;
+  height: 30px;
+  bottom: 0;
+  left: 0;
+  background-color: black;
+}
+
+/*
+ * Menu button / system
+ */
+
+#menu-button {
+  z-index: 3;
+  border: 2px solid white;
+  position: absolute;
+  margin: 10px;
+  top: 0;
+  right: 0;
+  background-color: black;
+  height: 30px;
+  width: 30px;
   padding: 10px;
+  display: block;
+  outline: none;
+  cursor: pointer;
+}
+
+/*
+ * Media Queries
+ */
+
+/* Min height & width are both above 525, show full menu overlays - header/footer */
+@media screen and (min-width: 525px) and (min-height: 525px) {
+  .box .row.header, .box .row.header .container-top, .box .row.footer {
+    display: block;
+  }
+  .box .row.header .container-critical {
+    float: left;
+  }
+  .box .row.header .container-toggle {
+    display: none;
+  }
+
+  #menu-button {
+    height: 40px;
+    width: 40px;
+  }
+}
+
+/* >= 400 - Tiny -> Small Transition */
+@media screen and (min-width: 400px) {
+  #menu-button {
+    border: 2px solid black;
+  }
+  #menu-button:hover {
+    border: 2px solid white;
+  }
 }

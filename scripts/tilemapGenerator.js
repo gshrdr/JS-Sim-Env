@@ -2,6 +2,8 @@
  * Generate and draw tilemaps
  */
 
+const TILESIZE = 20;
+
 class TilemapGenerator {
 
   // Setup the TilemapGenerator class object
@@ -11,7 +13,7 @@ class TilemapGenerator {
     this.width = width;
 
     // Set tile size
-    this.tileSize = 10;
+    this.tileSize = TILESIZE;
 
     // Generate empty array for the terrain map
     this.map = new Array(height);
