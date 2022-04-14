@@ -11,10 +11,6 @@ let icon3 = document.getElementById("c");
 let menuTop = document.getElementById("menu-top");
 let menu = document.getElementById("menu");
 
-// Console events log controller
-const shouldLogHamburgerMenuButtonDebug = true;
-const shouldLogListItemButtonDebug = true;
-
 // Menu activation state
 let menuIsActivated = false;
 
@@ -123,6 +119,9 @@ function runMenuElementsAnimation() {
 // Individual menu button is pressed
 function buttonClickById(Id) {
   switch (Id) {
+    case CONSOLE_LOGS_TOGGLE:
+      updateStateForId(Id);
+      break;
     case CLEAR_CONSOLE:
       updateStateForId(Id);
       break;
@@ -146,6 +145,10 @@ function buttonClickById(Id) {
       logButtonClickDebug(retrieveMenuIDValue(Id));
       updateStateForId(Id);
       break;
+    case GAME_LOOP_TOGGLE:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
     default:
       logButtonClickDebug(retrieveMenuIDValue(Id));
       break;
@@ -155,12 +158,14 @@ function buttonClickById(Id) {
 // Handle specific state update by ID
 function updateStateForId(Id) {
   switch (Id) {
+    case CONSOLE_LOGS_TOGGLE: toggleState(Id); break;
     case CLEAR_CONSOLE: console.clear(); break;
     case CLEAR_STORAGE: resetStorage(); break;
     case PRINT_STORAGE: printStorage(); break;
     case FPS_TOGGLE: toggleState(Id); break;
     case DRAW_MODE_TOGGLE: toggleState(Id); break;
     case PAN_ZOOM_MODE_TOGGLE: toggleState(Id); break;
+    case GAME_LOOP_TOGGLE: toggleState(Id); break;
     default: break;
   }
 }
@@ -168,9 +173,11 @@ function updateStateForId(Id) {
 // Toggle button state by ID
 function toggleState(Id) {
   switch (Id) {
+    case CONSOLE_LOGS_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
     case FPS_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
     case DRAW_MODE_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
     case PAN_ZOOM_MODE_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
+    case GAME_LOOP_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
     default: break;
   }
 }

@@ -63,6 +63,12 @@
 
         <div class="hamburger-menu-container hide-menu-no-animation" id="menu">
           <div class="hamburger-menu-item hide-item">
+            <button id="sublist-button" onclick="buttonClickById(CONSOLE_LOGS_TOGGLE);">
+              <div class="left-item"><p>Console Debug Logs</p></div>
+              <div class="right-item"><p id="CONSOLE_LOGS_TOGGLE"></p></div>
+            </button>
+          </div>
+          <div class="hamburger-menu-item hide-item">
             <button id="sublist-button" onclick="buttonClickById(CLEAR_CONSOLE);">
               <div class="left-item"><p>Clear Console</p></div>
               <div class="right-item icon"><p>&olcross;</p></div>
@@ -96,6 +102,12 @@
             <button id="sublist-button" onclick="buttonClickById(PAN_ZOOM_MODE_TOGGLE);">
               <div class="left-item"><p>Pan/Zoom Mode</p></div>
               <div class="right-item"><p id="PAN_ZOOM_MODE_TOGGLE"></p></div>
+            </button>
+          </div>
+          <div class="hamburger-menu-item hide-item">
+            <button id="sublist-button" onclick="buttonClickById(GAME_LOOP_TOGGLE);">
+              <div class="left-item"><p>Run Game Loop</p></div>
+              <div class="right-item"><p id="GAME_LOOP_TOGGLE"></p></div>
             </button>
           </div>
           <div class="hamburger-menu-item hide-item">

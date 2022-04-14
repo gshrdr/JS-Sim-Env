@@ -2,14 +2,6 @@
  * This script assists with loading & setting local storage variables
  */
 
-// Console debug log control
-const shouldLogLocalStorageDebug = true;
-
-// Update local state values for easy access across application
-let HAS_LOADED_CANVAS_ENTITIES = false;
-let DRAW_MODE = false;
-let PAN_ZOOM_MODE = false;
-
 // Get local storage item by ID
 function getLocalItemById(Id) {
   let value = retrieveMenuIDValue(Id);
@@ -27,7 +19,14 @@ function checkForUndefinedValues() {
     let localItem = getLocalItemById(key);
     if (localItem === null) {
       if (shouldLogLocalStorageDebug) console.log("Local storage null value found | LS Key: " + value)
-      localStorage.setItem(value, false);
+
+      // Set default local storage values - true for certain specificed key-value items, false for anything else
+      if (value === "PAN_ZOOM_MODE_TOGGLE" || value === "GAME_LOOP_TOGGLE") {
+        localStorage.setItem(value, true);
+      } else {
+        localStorage.setItem(value, false);
+      }
+
       if (shouldLogLocalStorageDebug) console.log("New local storage value: " + localStorage.getItem(value));
     }
   }
@@ -115,11 +114,27 @@ function updateMenuItemDisplayState(Id) {
 // Update DOM display element 7 runs subsequent state update functions by ID
 function updateDOMDisplayAndGameState(Id) {
   switch (Id) {
+    case CONSOLE_LOGS_TOGGLE: updateMenuItemDisplayState(Id); toggleConsoleLogs(); break;
     case FPS_TOGGLE: updateMenuItemDisplayState(Id); toggleFPSDisplay(); break;
     case DRAW_MODE_TOGGLE: updateMenuItemDisplayState(Id); toggleDrawMode(); break;
     case PAN_ZOOM_MODE_TOGGLE: updateMenuItemDisplayState(Id); togglePanZoomMode(); break;
+    case GAME_LOOP_TOGGLE: updateMenuItemDisplayState(Id); toggleGameLoop(); break;
     default: break;
   }
+}
+
+// toggle console logs state
+function toggleConsoleLogs() {
+  // Get local value + update state
+  let localItem = getLocalItemById(CONSOLE_LOGS_TOGGLE);
+  if (localItem === "true") {
+    enableAllConsoleLogs();
+  } else {
+    overrideAndResetConsoleLogs();
+  }
+
+  // Console log
+  if (shouldLogLocalStorageDebug) console.log("Updating console log status: " + localItem)
 }
 
 // Show or hide FPS toggle
@@ -170,5 +185,22 @@ function togglePanZoomMode() {
   if (HAS_LOADED_CANVAS_ENTITIES) {
     if (shouldLogLocalStorageDebug) console.log("Toggling pan / zoom mode")
     clearDrawingBoard();
+  }
+}
+
+// Toggle game loop override
+function toggleGameLoop() {
+  // Get local value + toggle
+  let localItem = getLocalItemById(GAME_LOOP_TOGGLE);
+  if (localItem === "true") {
+    GAME_LOOP_OVERRIDE = true;
+  } else {
+    GAME_LOOP_OVERRIDE = false;
+  }
+
+  // Modify necessary game state elements
+  if (HAS_LOADED_CANVAS_ENTITIES) {
+    if (shouldLogLocalStorageDebug) console.log("Toggling game loop override")
+    startGameLoopOverride();
   }
 }

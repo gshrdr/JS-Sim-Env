@@ -10,12 +10,6 @@ let entityCanvas = document.getElementById("entity-canvas");
 // Tilemap generator object
 let tilemapGenerator;
 
-// Boolean flag to determine if we should output logs to the console
-const shouldLogInitialDraw = true; // Log initial screen size information
-const shouldLogResizeSize = true;  // Log screen size during each game loop frame - note, this is laggy and should be set to false for deployment
-const shouldLogScreenResizeEvents = true; // Log an update whenever the screen starts or stops resizing
-const shouldLogTilemapRegeneration = true; // Log when the tilemap is regenerated and redrawn
-
 /*
  * Overall Application Entry Point
  */
@@ -28,6 +22,9 @@ window.onload = function() {
   // Initial Draw Call + Resize
   if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
   initialLoad();
+
+  // Animation loop override - run loop constantly
+  if (GAME_LOOP_OVERRIDE) startGameLoopOverride();
 
   // Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
   setTimeout(function() {
@@ -49,10 +46,6 @@ function initialLoad() {
 /*
  * Main Game / Animation Loop
  */
-
-// Animation loop override - run loop constantly
-let shouldRunGameLoopOverride = true;
-if (shouldRunGameLoopOverride) startGameLoopOverride();
 
 // Animaton loop run/pause due to screen resize
 let shouldRunGameLoopScreenResize = false;
@@ -76,7 +69,7 @@ function gameLoop(timeStamp) {
   calculateFPS(timeStamp);
 
   // If the game loop is set to continue, run another individual step
-  if (shouldRunGameLoopOverride || shouldRunGameLoopScreenResize) {
+  if (GAME_LOOP_OVERRIDE || shouldRunGameLoopScreenResize) {
     window.requestAnimationFrame(gameLoop);
   } else {
     // game loop is ending, update FPS counter to reflect no current FPS updates
@@ -86,13 +79,7 @@ function gameLoop(timeStamp) {
 
 // Game loop override - begin the game loop
 function startGameLoopOverride() {
-  shouldRunGameLoopOverride = true;
-  window.requestAnimationFrame(gameLoop);
-}
-
-// Game loop override - stop the game loop (unless another event fires a temporary update)
-function endGameLoopOverride() {
-  shouldRunGameLoopOverride = false;
+  if (GAME_LOOP_OVERRIDE) window.requestAnimationFrame(gameLoop);
 }
 
 // Screen started resizing - run game loop
@@ -101,7 +88,7 @@ function screenResizeStarted() {
     // Begin resizing / animation loop
     shouldRunGameLoopScreenResize = true;
     // Run game loop if we aren't already running loop due to override
-    if (shouldRunGameLoopOverride == false) window.requestAnimationFrame(gameLoop);
+    if (GAME_LOOP_OVERRIDE == false) window.requestAnimationFrame(gameLoop);
     if (shouldLogScreenResizeEvents) console.warn("Begin resizing event.");
   }
 }

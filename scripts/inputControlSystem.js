@@ -6,8 +6,6 @@
  // the drag events to move/pan the camera around the tile map
  // Scrolling camera tutorial: https://gamedev.stackexchange.com/questions/86820/how-do-i-make-a-scrolling-map-within-an-html5-canvas
 
-const logEventsDebug = true;
-
 let canvasContainer = document.getElementById('canvas-container');
 
 const drawableCanvas = document.getElementById('drawable-canvas');
