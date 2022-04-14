@@ -10,6 +10,9 @@ let entityCanvas = document.getElementById("entity-canvas");
 // Tilemap generator object
 let tilemapGenerator;
 
+// Game loop override has started?
+let gameLoopOverrideHasBeenTriggered = false;
+
 /*
  * Overall Application Entry Point
  */
@@ -52,7 +55,7 @@ let shouldRunGameLoopScreenResize = false;
 
 // Handle one requestAnimationFrame step - this is one individual step within the main game loop
 function gameLoop(timeStamp) {
-  // Log
+  // Debug log
   if (shouldRunGameLoopScreenResize && shouldLogScreenResizeEvents) { console.log("Resize tilemap/entity canvas | Copy tilemap offscreen context to screen") }
 
   // Resize + redraw tilemap layer
@@ -75,11 +78,19 @@ function gameLoop(timeStamp) {
     // game loop is ending, update FPS counter to reflect no current FPS updates
     endFPS();
   }
+
+  // Reset game loop manual override trigger check
+  if (GAME_LOOP_OVERRIDE === false) {
+    gameLoopOverrideHasBeenTriggered = false;
+  }
 }
 
 // Game loop override - begin the game loop
 function startGameLoopOverride() {
-  if (GAME_LOOP_OVERRIDE) window.requestAnimationFrame(gameLoop);
+  if (GAME_LOOP_OVERRIDE && !gameLoopOverrideHasBeenTriggered) {
+    gameLoopOverrideHasBeenTriggered = true;
+    window.requestAnimationFrame(gameLoop);
+  }
 }
 
 // Screen started resizing - run game loop
