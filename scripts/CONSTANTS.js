@@ -12,6 +12,7 @@
 
 // Scrolling menu list button IDs
 let keyIterator = 1;
+const REFRESH_BROWSER = keyIterator; keyIterator++;
 const CONSOLE_LOGS_TOGGLE = keyIterator; keyIterator++;
 const CLEAR_CONSOLE = keyIterator; keyIterator++;
 const CLEAR_STORAGE = keyIterator; keyIterator++;
@@ -27,6 +28,8 @@ const ALL_TOGGLEABLE_MENU_IDS = [CONSOLE_LOGS_TOGGLE, FPS_TOGGLE, DRAW_MODE_TOGG
 // Retrieve key-value information for a particular menu ID
 function retrieveMenuIDValue(Id) {
   switch (Id) {
+    case REFRESH_BROWSER:
+      return "REFRESH_BROWSER";
     case CONSOLE_LOGS_TOGGLE:
       return "CONSOLE_LOGS_TOGGLE";
     case CLEAR_CONSOLE:

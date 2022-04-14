@@ -324,9 +324,11 @@ let maxXPosition = 200;
 let speedX = 1;
 function drawRectangle(ctx) {
   // Update rectangle position x
-  positionX = positionX + speedX;
-  if (positionX > maxXPosition || positionX < minXPosition) {
-    speedX = speedX * (-1);
+  if (GAME_LOOP_OVERRIDE) {
+    positionX = positionX + speedX;
+    if (positionX > maxXPosition || positionX < minXPosition) {
+      speedX = speedX * (-1);
+    }
   }
 
   // Update rectangle position y

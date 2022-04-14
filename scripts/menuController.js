@@ -119,6 +119,9 @@ function runMenuElementsAnimation() {
 // Individual menu button is pressed
 function buttonClickById(Id) {
   switch (Id) {
+    case REFRESH_BROWSER:
+      updateStateForId(Id);
+      break;
     case CONSOLE_LOGS_TOGGLE:
       updateStateForId(Id);
       break;
@@ -158,6 +161,7 @@ function buttonClickById(Id) {
 // Handle specific state update by ID
 function updateStateForId(Id) {
   switch (Id) {
+    case REFRESH_BROWSER: window.location.reload(); break;
     case CONSOLE_LOGS_TOGGLE: toggleState(Id); break;
     case CLEAR_CONSOLE: console.clear(); break;
     case CLEAR_STORAGE: resetStorage(); break;
