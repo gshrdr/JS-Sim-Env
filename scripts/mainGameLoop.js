@@ -28,12 +28,6 @@ window.onload = function() {
 
   // Animation loop override - run loop constantly
   if (GAME_LOOP_OVERRIDE) startGameLoopOverride();
-
-  // Sometimes the first draw call doesn't work, so do a clean up call to give the CSS height/width time to kick in
-  setTimeout(function() {
-    if (shouldLogInitialDraw) console.log("DRAW AGAIN: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
-    initialLoad();
-  }, 250);
 };
 
 // Resize + draw the initial layout
@@ -271,7 +265,6 @@ function generateInitialTilemap() {
 // Draw tilemap
 function drawTilemap(ctx) {
   // Retrieve tilemap generator variables
-  let map = tilemapGenerator.retrieveMap();
   let mapSize = tilemapGenerator.retrieveMapSize();
   let tileSize = tilemapGenerator.retrieveTileSize();
 
@@ -279,7 +272,7 @@ function drawTilemap(ctx) {
   for (let col = 0; col < mapSize.height; col += 1) {
     for (let row = 0; row < mapSize.width; row += 1) {
       // Tile
-      ctx.fillStyle = getRandomRgb();
+      ctx.fillStyle = tilemapGenerator.retrieveTileColor(row, col);
       ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
 
       // Grid
