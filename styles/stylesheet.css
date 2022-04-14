@@ -145,6 +145,10 @@ canvas {
  * Controls system
  */
 
+#fps-debug {
+  display: none;
+}
+
 .debug p {
   margin: 0;
   font-size: 12px;
