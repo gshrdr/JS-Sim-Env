@@ -16,8 +16,8 @@
   --hamburger-line-size-sm: 15px;
   --hamburger-line-size-lg: 22px;
   /* Scrolling menu list */
-  --menu-list-size-sm: 180px;
-  --menu-list-size-lg: 240px;
+  --menu-list-size-sm: 220px;
+  --menu-list-size-lg: 260px;
 }
 
 body {
@@ -230,7 +230,7 @@ canvas {
 }
 
 /*
- * Hamburger menu elements
+ * Hamburger scrolling menu list elements
  */
 
 /* Main scrolling list container */
@@ -330,6 +330,45 @@ canvas {
     visibility: visible;
     opacity: 1;
   }
+}
+
+/*
+ * Hamburger scrolling menu list individual button elements
+ */
+
+#sublist-button {
+  font-family: sans-serif;
+  font-size: 14px;
+  background-color: red;
+  width: 100%;
+  height: 100%;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
+
+.left-item {
+  background-color: green;
+  float: left;
+}
+
+.right-item {
+  background-color: blue;
+  float: right;
+  width: 40px;
+  font-weight: 700;
+  justify-content: center;
+}
+
+.right-item.icon {
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.left-item, .right-item {
+  height: 100%;
+  display: flex;
+  align-items: center;
 }
 
 /*

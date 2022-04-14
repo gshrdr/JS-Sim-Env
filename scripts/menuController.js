@@ -12,7 +12,8 @@ let menuTop = document.getElementById("menu-top");
 let menu = document.getElementById("menu");
 
 // Console events log controller
-const shouldLogMenuButtonDebug = true;
+const shouldLogHamburgerMenuButtonDebug = true;
+const shouldLogListItemButtonDebug = true;
 
 // Menu activation state
 let menuIsActivated = false;
@@ -35,7 +36,7 @@ function menuButtonClick() {
   runMenuElementsAnimation();
 
   // Debug log
-  if (shouldLogMenuButtonDebug) console.log("Menu button press | Menu status: " + (menuIsActivated ? "Open" : "Closed"));
+  if (shouldLogHamburgerMenuButtonDebug) console.log("Hamburger button press | Menu status: " + (menuIsActivated ? "Open" : "Closed"));
 }
 
 // Run hamburger button animation
@@ -104,3 +105,39 @@ function runMenuElementsAnimation() {
 /*
  * Individual hamburger menu button click
  */
+
+// Console log debug helper for menu button click
+function logButtonClickDebug(input) {
+  if (shouldLogListItemButtonDebug) console.log("Menu List Button Pressed | ID: " + input);
+}
+
+// Individual menu button is pressed
+function buttonClickById(Id) {
+  switch (Id) {
+    case 1:
+      logButtonClickDebug(Id);
+      updateStateForId(Id);
+      break;
+    case 2:
+      logButtonClickDebug(Id);
+      updateStateForId(Id);
+      break;
+    default:
+      logButtonClickDebug("DEFAULT");
+      break;
+  }
+}
+
+// Handle specific state update by ID
+function updateStateForId(Id) {
+  switch (Id) {
+    case 1: console.clear(); break;
+    case 2: toggleState(Id); break;
+    default: break;
+  }
+}
+
+// Toggle button state by ID
+function toggleState(Id) {
+  if (shouldLogListItemButtonDebug) console.log("Toggle State | ID: " + Id);
+}
