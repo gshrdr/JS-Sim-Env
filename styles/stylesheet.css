@@ -15,11 +15,14 @@
   --menu-button-size-lg: 45px;
   --hamburger-line-size-sm: 15px;
   --hamburger-line-size-lg: 22px;
+  /* Scrolling menu list */
+  --menu-list-size-sm: 180px;
+  --menu-list-size-lg: 240px;
 }
 
 body {
   font-family: sans-serif;
-  color: #d1d5db;
+  color: #111827;;
   background-color: #111827;
 }
 
@@ -110,10 +113,12 @@ body {
  */
 
 #canvas-container {
+  z-index: 1;
   position: absolute;
   display: block;
   width: 100%;
   height: 100%;
+  border: 2px solid #111827;
 }
 
 canvas {
@@ -125,16 +130,15 @@ canvas {
 }
 
 #tilemap-canvas {
-  z-index: 1;
-}
-
-#entity-canvas {
   z-index: 2;
 }
 
-#drawable-canvas {
+#entity-canvas {
   z-index: 3;
-  border: 1px solid white;
+}
+
+#drawable-canvas {
+  z-index: 4;
 }
 
 /*
@@ -160,16 +164,6 @@ canvas {
 /*
  * Hamburger button system
  */
-
- .menu-button-background {
-   z-index: 10;
-   position: absolute;
-   background-color: #111827;
-   height: calc(var(--menu-button-size-sm) + 20px);
-   right: 0;
-   top: 0;
-   width: 140px;
- }
 
  #menu-button {
    z-index: 15;
@@ -214,7 +208,7 @@ canvas {
   width: 100%;
   height: 100%;
   cursor: pointer;
-  transition: all 0.2s ease-in-out;
+  transition: all 0.8s ease-in-out;
 }
 
 .icon-1.a {
@@ -239,37 +233,38 @@ canvas {
  * Hamburger menu elements
  */
 
+/* Main scrolling list container */
 .hamburger-menu-container {
   z-index: 10;
   position: absolute;
   background-color: #111827;
-  top: calc(var(--menu-button-size-sm) + 20px);
+  top: calc(var(--menu-button-size-sm) + 16px);
   right: 0;
   bottom: 0;
   padding: 10px;
   padding-top: 0px;
-  width: 140px;
   overflow-y: scroll;
-  direction: rtl;
+  width: var(--menu-list-size-sm);
 }
 
-.hamburger-menu-container::-webkit-scrollbar {
-  display: block;
-  background-color: rgba(0, 0, 0, 0.3);
-  width: 6px;
-}
-
-.hamburger-menu-container::-webkit-scrollbar-thumb {
-  background-color: #1d4ed8;
+/* List background extender above list and behind hamburger button */
+.menu-button-background {
+  z-index: 10;
+  position: absolute;
+  background-color: #111827;
+  height: calc(var(--menu-button-size-sm) + 20px);
+  right: 0;
+  top: 0;
+  width: var(--menu-list-size-sm);
 }
 
 .hamburger-menu-item {
   border: 2px solid black;
   margin-bottom: 10px;
+  margin-top: 4px;
   width: 100%;
   height: 30px;
   background-color: black;
-  direction:ltr;
 }
 
 .hide-menu-no-animation {
@@ -374,12 +369,12 @@ canvas {
 
   /* Hamburger menu elements */
   .hamburger-menu-container {
-    top: calc(var(--menu-button-size-lg) + 20px);
+    top: calc(var(--menu-button-size-lg) + 16px);
   }
 }
 
 /* >= 400 - Tiny -> Small Transition */
-@media screen and (min-width: 400px) {
+@media screen and (min-width: 400px) and (min-height: 400px) {
   /* Hamburger menu button */
   #menu-button:hover {
     border: 2px solid white;
@@ -391,5 +386,32 @@ canvas {
   /* Hamburger menu elements */
   .hamburger-menu-item:hover {
     border: 2px solid white;
+  }
+
+  /* Main scrolling list container */
+  .hamburger-menu-container {
+    width: var(--menu-list-size-lg);
+  }
+
+  /* List background extender above list and behind hamburger button */
+  .menu-button-background {
+    width: var(--menu-list-size-lg);
+  }
+
+  /* Only show custom scroll bar on non smartphone screens */
+  .hamburger-menu-container {
+    direction: rtl;
+  }
+
+  .hamburger-menu-item {
+    direction: rtl;
+  }
+  .hamburger-menu-container::-webkit-scrollbar {
+    display: block;
+    background-color: rgba(0, 0, 0, 0.3);
+    width: 6px;
+  }
+  .hamburger-menu-container::-webkit-scrollbar-thumb {
+    background-color: #1d4ed8;
   }
 }

@@ -314,15 +314,7 @@ function redrawEntities() {
   ctx.clearRect(0, 0, entityCanvas.width, entityCanvas.height);
 
   // Draw entities
-  drawBorder(ctx);
   drawRectangle(ctx);
-}
-
-// Draw Border
-function drawBorder(ctx) {
-  ctx.strokeStyle = 'black';
-  ctx.lineWidth = '10';
-  ctx.strokeRect(0, 0, entityCanvas.width, entityCanvas.height);
 }
 
 // Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
