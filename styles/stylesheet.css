@@ -451,6 +451,6 @@ canvas {
     width: 6px;
   }
   .hamburger-menu-container::-webkit-scrollbar-thumb {
-    background-color: #1d4ed8;
+    background-color: #0ea5e9;
   }
 }

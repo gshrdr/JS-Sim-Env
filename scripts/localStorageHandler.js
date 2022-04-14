@@ -5,6 +5,11 @@
 // Console debug log control
 const shouldLogLocalStorageDebug = true;
 
+// Update local state values for easy access across application
+let HAS_LOADED_CANVAS_ENTITIES = false;
+let DRAW_MODE = false;
+let PAN_ZOOM_MODE = false;
+
 // Get local storage item by ID
 function getLocalItemById(Id) {
   let value = retrieveMenuIDValue(Id);
@@ -31,7 +36,7 @@ function checkForUndefinedValues() {
 function runInitialToggleUpdate() {
   let keyEntries = ALL_TOGGLEABLE_MENU_IDS;
   for(let i = 0; i < keyEntries.length; i++) {
-    updateDOMDisplay(keyEntries[i]);
+    updateDOMDisplayAndGameState(keyEntries[i]);
   }
 }
 
@@ -81,8 +86,8 @@ function toggleMenuItemState(Id) {
     localStorage.setItem(value, true);
   }
 
-  // Update DOM display state
-  updateDOMDisplay(Id);
+  // Update DOM display & game state
+  updateDOMDisplayAndGameState(Id);
 }
 
 // Update scrolling menu list toggle - "ON" or "OFF"
@@ -107,12 +112,12 @@ function updateMenuItemDisplayState(Id) {
   if (shouldLogLocalStorageDebug) console.log("Updating menu list item state | Key: " + key + " Local storage state: " + localItem);
 }
 
-// Update DOM display element by ID
-function updateDOMDisplay(Id) {
+// Update DOM display element 7 runs subsequent state update functions by ID
+function updateDOMDisplayAndGameState(Id) {
   switch (Id) {
     case FPS_TOGGLE: updateMenuItemDisplayState(Id); toggleFPSDisplay(); break;
-    case DRAW_MODE_TOGGLE: updateMenuItemDisplayState(Id); break;
-    case PAN_ZOOM_MODE_TOGGLE: updateMenuItemDisplayState(Id); break;
+    case DRAW_MODE_TOGGLE: updateMenuItemDisplayState(Id); toggleDrawMode(); break;
+    case PAN_ZOOM_MODE_TOGGLE: updateMenuItemDisplayState(Id); togglePanZoomMode(); break;
     default: break;
   }
 }
@@ -132,4 +137,38 @@ function toggleFPSDisplay() {
 
   // Console log
   if (shouldLogLocalStorageDebug) console.log("Updating FPS DOM display status: " + localItem)
+}
+
+// Toggle draw mode
+function toggleDrawMode() {
+  // Get local value + toggle
+  let localItem = getLocalItemById(DRAW_MODE_TOGGLE);
+  if (localItem === "true") {
+    DRAW_MODE = true;
+  } else {
+    DRAW_MODE = false;
+  }
+
+  // Modify necessary game state elements
+  if (HAS_LOADED_CANVAS_ENTITIES) {
+    if (shouldLogLocalStorageDebug) console.log("Toggling draw mode + clearing drawing board")
+    clearDrawingBoard();
+  }
+}
+
+// Toggle pan zoom mode
+function togglePanZoomMode() {
+  // Get local value + toggle
+  let localItem = getLocalItemById(PAN_ZOOM_MODE_TOGGLE);
+  if (localItem === "true") {
+    PAN_ZOOM_MODE = true;
+  } else {
+    PAN_ZOOM_MODE = false;
+  }
+
+  // Modify necessary game state elements
+  if (HAS_LOADED_CANVAS_ENTITIES) {
+    if (shouldLogLocalStorageDebug) console.log("Toggling pan / zoom mode")
+    clearDrawingBoard();
+  }
 }

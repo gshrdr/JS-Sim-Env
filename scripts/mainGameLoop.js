@@ -42,6 +42,8 @@ function initialLoad() {
   redrawTilemap();
   resizeEntities();
   redrawEntities();
+
+  HAS_LOADED_CANVAS_ENTITIES = true;
 }
 
 /*

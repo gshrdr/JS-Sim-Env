@@ -63,7 +63,10 @@ if(isTouchDevice()){
     if (mouseIsCurrentlyDown) {
       if (logEventsDebug) console.log("Touch move")
       let containerYOffset = canvasContainer.getBoundingClientRect().top
-      drawLine(context, x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
+
+      // Update game state depending on current pan/zoom or draw mode toggle selection
+      if (DRAW_MODE) drawLine(context, x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
+
       x = e.touches[0].clientX;
       y = e.touches[0].clientY - containerYOffset;
     }
@@ -105,14 +108,15 @@ if(isTouchDevice()){
 
       if((timeDelta < 0.22) && (timeDelta > 0)){
          // Double Tap - clear screen
-         context.clearRect(0, 0, drawableCanvas.width, drawableCanvas.height);
+         if (DRAW_MODE) clearDrawingBoard();
 
          // Reset touch event
          mouseIsCurrentlyDown = false;
          x = 0;
          y = 0;
 
-         if (logEventsDebug) console.log("Double touch - clear screen")
+         if (logEventsDebug) console.log("Double touch event")
+         if (logEventsDebug && DRAW_MODE) console.log("Double touch - clear screen")
       }
 
       recentTouchTimeStamp = Date.now() / 1000
@@ -136,7 +140,9 @@ if(isTouchDevice()){
     if (mouseIsCurrentlyDown) {
       if (logEventsDebug) console.log("Mouse move")
 
-      drawLine(context, x, y, e.offsetX, e.offsetY);
+      // Update game state depending on toggle mode selections
+      if (DRAW_MODE) drawLine(context, x, y, e.offsetX, e.offsetY);
+
       x = e.offsetX;
       y = e.offsetY;
     }
@@ -145,18 +151,22 @@ if(isTouchDevice()){
   canvasContainer.addEventListener("mouseup", function(e) {
     if (mouseIsCurrentlyDown) {
       if (logEventsDebug) console.log("Mouse up")
-
       mouseIsCurrentlyDown = false;
-      drawLine(context, x, y, e.offsetX, e.offsetY);
+
+      // Update game state depending on toggle mode selections
+      if (DRAW_MODE) drawLine(context, x, y, e.offsetX, e.offsetY);
+
       x = 0;
       y = 0;
     }
   })
 
   canvasContainer.addEventListener('dblclick', function (e) {
-    if (logEventsDebug) console.log("Double click - clear screen")
+    if (logEventsDebug) console.log("Double click event")
+    if (logEventsDebug && DRAW_MODE) console.log("Double click - clear screen")
 
-    context.clearRect(0, 0, drawableCanvas.width, drawableCanvas.height);
+    // Update game state depending on toggle mode selections
+    if (DRAW_MODE) clearDrawingBoard();
   });
 }
 
@@ -170,4 +180,10 @@ function drawLine(context, x1, y1, x2, y2) {
   context.lineTo(x2, y2);
   context.stroke();
   context.closePath();
+}
+
+/* Clear drawable canvas */
+
+function clearDrawingBoard() {
+  context.clearRect(0, 0, drawableCanvas.width, drawableCanvas.height);
 }
