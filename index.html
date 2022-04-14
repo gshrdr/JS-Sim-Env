@@ -20,11 +20,7 @@
     <script defer src="scripts/tilemapGenerator.js"></script>
     <script defer src="scripts/mainGameLoop.js"></script>
     <script defer src="scripts/cameraSystem.js"></script>
-    <script>
-      function testClick() {
-        console.log("Button Click!");
-      }
-    </script>
+    <script defer src="scripts/menuController.js"></script>
   </head>
 
   <body>
@@ -52,7 +48,14 @@
           </div>
         </div>
 
-        <button id="menu-button" onclick="testClick();"></button>
+        <button id="menu-button" onclick="menuButtonClick();">
+          <div class="hamburger-icon" id="icon">
+            <div class="icon-1" id="a"></div>
+            <div class="icon-2" id="b"></div>
+            <div class="icon-3" id="c"></div>
+            <div class="clear"></div>
+          </div>
+        </button>
       </div>
       <div class="row footer">
         <p>Copyright 2022 &copy; Gavin Shrader</p>

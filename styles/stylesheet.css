@@ -8,6 +8,15 @@
   padding: 0;
 }
 
+:root {
+  color-scheme: dark;
+  /* Hamburger menu button */
+  --menu-button-size-sm: 30px;
+  --menu-button-size-lg: 45px;
+  --hamburger-line-size-sm: 15px;
+  --hamburger-line-size-lg: 22px;
+}
+
 body {
   font-family: sans-serif;
   color: #d1d5db;
@@ -160,12 +169,64 @@ canvas {
   top: 0;
   right: 0;
   background-color: black;
-  height: 30px;
-  width: 30px;
+  height: var(--menu-button-size-sm);
+  width: var(--menu-button-size-sm);
   padding: 10px;
   display: block;
   outline: none;
   cursor: pointer;
+}
+
+/*
+ * Hamburger menu animation
+ */
+
+
+.icon-1, .icon-2, .icon-3 {
+  position: absolute;
+  left: 25%;
+  top: 50%;
+  height: 3px;
+  width: var(--hamburger-line-size-sm);
+  background-color: white;
+  transition: all 400ms cubic-bezier(0.84, 0.06, 0.52, 1.8);
+}
+
+.icon-1 {
+  transform: translateY(-8px);
+  animation-delay: 100ms;
+}
+
+.icon-3 {
+  transform: translateY(8px);
+  animation-delay: 250ms;
+}
+
+.hamburger-icon {
+  position: absolute;
+  left: -1%;
+  top: -2%;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+}
+
+.icon-1.a {
+  transform: rotate(40deg);
+}
+
+.icon-3.b {
+  transform: rotate(-40deg);
+}
+
+.icon-2.c {
+  opacity: 0;
+}
+
+.clear {
+  clear: both;
 }
 
 /*
@@ -174,6 +235,7 @@ canvas {
 
 /* Min height & width are both above 525, show full menu overlays - header/footer */
 @media screen and (min-width: 525px) and (min-height: 525px) {
+  /* Overall screen flex layout */
   .box .row.header, .box .row.header .container-top, .box .row.footer {
     display: block;
   }
@@ -184,14 +246,19 @@ canvas {
     display: none;
   }
 
+  /* Hamburger menu button */
   #menu-button {
-    height: 40px;
-    width: 40px;
+    height: var(--menu-button-size-lg);
+    width: var(--menu-button-size-lg);
+  }
+  .icon-1, .icon-2, .icon-3 {
+    width: var(--hamburger-line-size-lg);
   }
 }
 
 /* >= 400 - Tiny -> Small Transition */
 @media screen and (min-width: 400px) {
+  /* Hamburger menu button */
   #menu-button {
     border: 2px solid black;
   }

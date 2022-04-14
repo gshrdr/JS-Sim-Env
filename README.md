@@ -50,3 +50,4 @@ These are the sources, tutorials, and code docs I used to build this project:
 * [JavaScript Random RGB Color](https://stackoverflow.com/questions/23095637/how-do-you-get-random-rgb-in-javascript)
 * [Game Development For The Web](http://blog.mrroa.com/game-development-for-the-web-series/)
 * [Custom CSS Checkbox Tutorial](https://moderncss.dev/pure-css-custom-checkbox-style/)
+* [JavaScript Hamburger Menu Button Animation Source](https://codepen.io/pranjal9599/pen/yJRNoL)

@@ -2,7 +2,7 @@
  * Generate and draw tilemaps
  */
 
-const TILESIZE = 20;
+const TILESIZE = 15;
 
 class TilemapGenerator {
 
