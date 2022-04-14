@@ -216,6 +216,18 @@ function redrawTilemap(shouldRegenerate = false) {
   }
 }
 
+// Completely regenerate terrain and tilemap - triggered from menu button press
+function regenerateTerrain() {
+  // Refresh perlin noise map
+  perlin.seed();
+
+  // Reset TilemapGenerator map
+  tilemapGenerator.generateTilemap();
+
+  // Redraw tilemap on canvas
+  redrawTilemap(true);
+}
+
 // Step 1 - Generate the tilemap's off screen canvas element
 // Generate the initial tile map on an offscreen canvas for efficient recall later
 function generateInitialTilemap() {

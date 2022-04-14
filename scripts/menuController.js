@@ -161,6 +161,10 @@ function buttonClickById(Id) {
       logButtonClickDebug(retrieveMenuIDValue(Id));
       updateStateForId(Id);
       break;
+    case REGEN_TERRAIN:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
     default:
       logButtonClickDebug(retrieveMenuIDValue(Id));
       break;
@@ -179,6 +183,7 @@ function updateStateForId(Id) {
     case DRAW_MODE_TOGGLE: toggleState(Id); break;
     case PAN_ZOOM_MODE_TOGGLE: toggleState(Id); break;
     case GAME_LOOP_TOGGLE: toggleState(Id); break;
+    case REGEN_TERRAIN: regenerateTerrain(); break;
     default: break;
   }
 }

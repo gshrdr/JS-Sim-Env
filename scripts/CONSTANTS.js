@@ -21,6 +21,7 @@ const FPS_TOGGLE = keyIterator; keyIterator++;
 const DRAW_MODE_TOGGLE = keyIterator; keyIterator++;
 const PAN_ZOOM_MODE_TOGGLE = keyIterator; keyIterator++;
 const GAME_LOOP_TOGGLE = keyIterator; keyIterator++;
+const REGEN_TERRAIN = keyIterator; keyIterator++;
 
 // All scrolling menu IDs which represent a toggle-able local storage control boolean
 const ALL_TOGGLEABLE_MENU_IDS = [CONSOLE_LOGS_TOGGLE, FPS_TOGGLE, DRAW_MODE_TOGGLE, PAN_ZOOM_MODE_TOGGLE, GAME_LOOP_TOGGLE];
@@ -46,6 +47,8 @@ function retrieveMenuIDValue(Id) {
       return "PAN_ZOOM_MODE_TOGGLE";
     case GAME_LOOP_TOGGLE:
       return "GAME_LOOP_TOGGLE";
+    case REGEN_TERRAIN:
+      return "REGEN_TERRAIN";
     default:
       return null;
   }
