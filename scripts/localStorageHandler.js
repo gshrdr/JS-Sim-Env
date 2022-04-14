@@ -102,8 +102,10 @@ function updateMenuItemDisplayState(Id) {
 
   // Update menu state
   if (localItem === "true") {
+    el.style.color = "green";
     el.innerHTML = "ON";
   } else {
+    el.style.color = "red";
     el.innerHTML = "OFF";
   }
 
