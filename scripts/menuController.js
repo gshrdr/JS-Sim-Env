@@ -8,6 +8,7 @@ let icon1 = document.getElementById("a");
 let icon2 = document.getElementById("b");
 let icon3 = document.getElementById("c");
 // Hamburger menu elements
+let menuTop = document.getElementById("menu-top");
 let menu = document.getElementById("menu");
 
 // Console events log controller
@@ -17,8 +18,14 @@ const shouldLogMenuButtonDebug = true;
 let menuIsActivated = false;
 
 // Animation controls
-let animationDelay = 0.1;
+let animationDelayShow = 0.04;
+let animationDelayHide = 0.03;
 
+/*
+ * Overall hamburger menu button press + menu deployment
+ */
+
+// Handle hamburger menu button click
 function menuButtonClick() {
   // Flip menu boolean toggle
   menuIsActivated = !menuIsActivated;
@@ -44,25 +51,32 @@ function runMenuElementsAnimation() {
   if (menuIsActivated) {
     // Show menu
     menu.classList.remove("hide-menu-no-animation");
-    menu.style.animationDelay = "0";
+    menu.style.animationDelay = "0s";
     menu.classList.remove("hide-menu");
     menu.classList.add("show-menu");
+    menuTop.classList.remove("hide-menu-no-animation");
+    menuTop.style.animationDelay = "0s";
+    menuTop.classList.remove("hide-menu");
+    menuTop.classList.add("show-menu");
+
+    // Scroll menu to top
+    menu.scrollTo(0, 0);
 
     // Show menu elements
     let childNodes = menu.children;
-    let animationDelayCurrent = 0;
+    let animationDelayCurrent = 0.3;
     for (let i = 0; i < childNodes.length; i++) {
       childNodes[i].classList.remove("hide-item");
       childNodes[i].style.visibility = "hidden";
       childNodes[i].style.opacity = "0";
       childNodes[i].style.animationDelay = `${animationDelayCurrent}s`;
       childNodes[i].classList.add("show-item");
-      animationDelayCurrent += animationDelay;
+      animationDelayCurrent += animationDelayShow;
     }
   } else {
     // Hide menu elements
     let childNodes = menu.children;
-    let animationDelayTotal = animationDelay * (childNodes.length - 1);
+    let animationDelayTotal = animationDelayHide * (childNodes.length - 1);
     let animationDelayCurrent = animationDelayTotal;
     for (let i = 0; i < childNodes.length; i++) {
       childNodes[i].classList.remove("show-item");
@@ -70,14 +84,23 @@ function runMenuElementsAnimation() {
       childNodes[i].style.opacity = "1";
       childNodes[i].style.animationDelay = `${animationDelayCurrent}s`;
       childNodes[i].classList.add("hide-item");
-      animationDelayCurrent -= animationDelay;
+      animationDelayCurrent -= animationDelayHide;
     }
 
     // Hide menu
     menu.style.visibility = "visible";
     menu.style.opacity = "1";
     menu.classList.remove("show-menu");
-    menu.style.animationDelay = `${animationDelayTotal}s`;
+    menu.style.animationDelay = "0.8s";
     menu.classList.add("hide-menu");
+    menuTop.style.visibility = "visible";
+    menuTop.style.opacity = "1";
+    menuTop.classList.remove("show-menu");
+    menuTop.style.animationDelay = "0.8s";
+    menuTop.classList.add("hide-menu");
   }
 }
+
+/*
+ * Individual hamburger menu button click
+ */

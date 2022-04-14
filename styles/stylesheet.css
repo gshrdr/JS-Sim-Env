@@ -161,8 +161,18 @@ canvas {
  * Hamburger button system
  */
 
- #menu-button {
+ .menu-button-background {
    z-index: 10;
+   position: absolute;
+   background-color: #111827;
+   height: calc(var(--menu-button-size-sm) + 20px);
+   right: 0;
+   top: 0;
+   width: 140px;
+ }
+
+ #menu-button {
+   z-index: 15;
    border: 2px solid black;
    position: absolute;
    margin: 10px;
@@ -199,7 +209,7 @@ canvas {
 
 .hamburger-icon {
   position: absolute;
-  left: -3%;
+  left: -5%;
   top: -2%;
   width: 100%;
   height: 100%;
@@ -232,18 +242,34 @@ canvas {
 .hamburger-menu-container {
   z-index: 10;
   position: absolute;
-  top: calc(var(--menu-button-size-sm));
+  background-color: #111827;
+  top: calc(var(--menu-button-size-sm) + 20px);
   right: 0;
-  margin: 10px;
+  bottom: 0;
+  padding: 10px;
+  padding-top: 0px;
   width: 140px;
+  overflow-y: scroll;
+  direction: rtl;
+}
+
+.hamburger-menu-container::-webkit-scrollbar {
+  display: block;
+  background-color: rgba(0, 0, 0, 0.3);
+  width: 6px;
+}
+
+.hamburger-menu-container::-webkit-scrollbar-thumb {
+  background-color: #1d4ed8;
 }
 
 .hamburger-menu-item {
   border: 2px solid black;
-  margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
   height: 30px;
   background-color: black;
+  direction:ltr;
 }
 
 .hide-menu-no-animation {
@@ -256,8 +282,7 @@ canvas {
 }
 
 .show-menu {
-  visibility: visible;
-  opacity: 1;
+  animation: showMenu 0.5s linear forwards;
 }
 
 @keyframes hideMenu {
@@ -271,12 +296,23 @@ canvas {
   }
 }
 
+@keyframes showMenu {
+  from {
+    visibility: hidden;
+    opacity: 0;
+  }
+  to {
+    visibility: visible;
+    opacity: 1;
+  }
+}
+
 .hide-item {
-  animation: hideMenuItems 0.5s linear forwards;
+  animation: hideMenuItems 0.32s linear forwards;
 }
 
 .show-item {
-  animation: showMenuItems 0.5s linear forwards;
+  animation: showMenuItems 0.32s linear forwards;
 }
 
 @keyframes hideMenuItems {
@@ -323,6 +359,9 @@ canvas {
     height: var(--menu-button-size-lg);
     width: var(--menu-button-size-lg);
   }
+  .menu-button-background {
+    height: calc(var(--menu-button-size-lg) + 20px);
+  }
   .icon-1, .icon-2, .icon-3 {
     width: var(--hamburger-line-size-lg);
   }
@@ -335,7 +374,7 @@ canvas {
 
   /* Hamburger menu elements */
   .hamburger-menu-container {
-    top: calc(var(--menu-button-size-lg));
+    top: calc(var(--menu-button-size-lg) + 20px);
   }
 }
 
@@ -343,14 +382,14 @@ canvas {
 @media screen and (min-width: 400px) {
   /* Hamburger menu button */
   #menu-button:hover {
-    border: 2px solid black;
+    border: 2px solid white;
   }
   .hamburger-icon {
-    left: -1%;
+    left: -2%;
   }
 
   /* Hamburger menu elements */
   .hamburger-menu-item:hover {
-    border: 2px solid black;
+    border: 2px solid white;
   }
 }
