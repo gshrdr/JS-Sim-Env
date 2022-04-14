@@ -22,6 +22,14 @@ let animationDelayHide = 0.02;
  * Overall hamburger menu button press + menu deployment
  */
 
+// Listen for click outside menu - close menu if so
+document.getElementById("canvas-container").addEventListener("click", closeMenu);
+function closeMenu() {
+  if (menuIsActivated) {
+    menuButtonClick();
+  }
+}
+
 // Handle hamburger menu button click
 function menuButtonClick() {
   // Flip menu boolean toggle
