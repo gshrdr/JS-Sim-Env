@@ -273,11 +273,11 @@ canvas {
 }
 
 .hide-menu {
-  animation: hideMenu 0.5s linear forwards;
+  animation: hideMenu 0.3s linear forwards;
 }
 
 .show-menu {
-  animation: showMenu 0.5s linear forwards;
+  animation: showMenu 0.3s linear forwards;
 }
 
 @keyframes hideMenu {
@@ -303,11 +303,11 @@ canvas {
 }
 
 .hide-item {
-  animation: hideMenuItems 0.32s linear forwards;
+  animation: hideMenuItems 0.2s linear forwards;
 }
 
 .show-item {
-  animation: showMenuItems 0.32s linear forwards;
+  animation: showMenuItems 0.2s linear forwards;
 }
 
 @keyframes hideMenuItems {
@@ -447,7 +447,7 @@ canvas {
   }
   .hamburger-menu-container::-webkit-scrollbar {
     display: block;
-    background-color: rgba(0, 0, 0, 0.3);
+    background: transparent;
     width: 6px;
   }
   .hamburger-menu-container::-webkit-scrollbar-thumb {

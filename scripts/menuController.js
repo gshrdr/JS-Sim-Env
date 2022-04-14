@@ -19,8 +19,8 @@ const shouldLogListItemButtonDebug = true;
 let menuIsActivated = false;
 
 // Animation controls
-let animationDelayShow = 0.04;
-let animationDelayHide = 0.03;
+let animationDelayShow = 0.03;
+let animationDelayHide = 0.02;
 
 /*
  * Overall hamburger menu button press + menu deployment
@@ -92,38 +92,62 @@ function runMenuElementsAnimation() {
     menu.style.visibility = "visible";
     menu.style.opacity = "1";
     menu.classList.remove("show-menu");
-    menu.style.animationDelay = "0.8s";
+    menu.style.animationDelay = "0.3s";
     menu.classList.add("hide-menu");
     menuTop.style.visibility = "visible";
     menuTop.style.opacity = "1";
     menuTop.classList.remove("show-menu");
-    menuTop.style.animationDelay = "0.8s";
+    menuTop.style.animationDelay = "0.3s";
     menuTop.classList.add("hide-menu");
   }
 }
 
 /*
- * Individual hamburger menu button click
+ * Individual list item button press console log helper function
  */
 
-// Console log debug helper for menu button click
-function logButtonClickDebug(input) {
-  if (shouldLogListItemButtonDebug) console.log("Menu List Button Pressed | ID: " + input);
-}
+ // Console log debug helper for menu button click
+ function logButtonClickDebug(input) {
+   if (shouldLogListItemButtonDebug) console.log("Menu List Button Pressed | ID: " + input);
+ }
+
+ // Console log debug helper for a state toggle
+ function logStateToggleDebug(input) {
+   if (shouldLogListItemButtonDebug) console.log("Toggle State | ID: " + input);
+ }
+
+/*
+ * Individual scrolling menu list button click
+ */
 
 // Individual menu button is pressed
 function buttonClickById(Id) {
   switch (Id) {
-    case 1:
-      logButtonClickDebug(Id);
+    case CLEAR_CONSOLE:
       updateStateForId(Id);
       break;
-    case 2:
-      logButtonClickDebug(Id);
+    case CLEAR_STORAGE:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
+    case PRINT_STORAGE:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
+    case FPS_TOGGLE:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
+    case DRAW_MODE_TOGGLE:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
+    case PAN_ZOOM_MODE_TOGGLE:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
       updateStateForId(Id);
       break;
     default:
-      logButtonClickDebug("DEFAULT");
+      logButtonClickDebug(retrieveMenuIDValue(Id));
       break;
   }
 }
@@ -131,13 +155,22 @@ function buttonClickById(Id) {
 // Handle specific state update by ID
 function updateStateForId(Id) {
   switch (Id) {
-    case 1: console.clear(); break;
-    case 2: toggleState(Id); break;
+    case CLEAR_CONSOLE: console.clear(); break;
+    case CLEAR_STORAGE: resetStorage(); break;
+    case PRINT_STORAGE: printStorage(); break;
+    case FPS_TOGGLE: toggleState(Id); break;
+    case DRAW_MODE_TOGGLE: toggleState(Id); break;
+    case PAN_ZOOM_MODE_TOGGLE: toggleState(Id); break;
     default: break;
   }
 }
 
 // Toggle button state by ID
 function toggleState(Id) {
-  if (shouldLogListItemButtonDebug) console.log("Toggle State | ID: " + Id);
+  switch (Id) {
+    case FPS_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
+    case DRAW_MODE_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
+    case PAN_ZOOM_MODE_TOGGLE: toggleMenuItemState(Id); logStateToggleDebug(retrieveMenuIDValue(Id)); break;
+    default: break;
+  }
 }

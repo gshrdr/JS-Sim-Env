@@ -17,6 +17,8 @@
     <link rel="stylesheet" href="styles/stylesheet.css">
 
     <!-- JavaScript -->
+    <script src="scripts/CONSTANTS.js"></script>
+    <script defer src="scripts/localStorageHandler.js"></script>
     <script defer src="scripts/tilemapGenerator.js"></script>
     <script defer src="scripts/mainGameLoop.js"></script>
     <script defer src="scripts/cameraSystem.js"></script>
@@ -45,7 +47,7 @@
           <canvas id="drawable-canvas"></canvas>
         </div>
 
-        <div class="debug">
+        <div class="debug" id="fps-debug">
           <p id="fps">FPS: --</p>
         </div>
 
@@ -61,21 +63,39 @@
 
         <div class="hamburger-menu-container hide-menu-no-animation" id="menu">
           <div class="hamburger-menu-item hide-item">
-            <button id="sublist-button" onclick="buttonClickById(1);">
+            <button id="sublist-button" onclick="buttonClickById(CLEAR_CONSOLE);">
               <div class="left-item"><p>Clear Console</p></div>
               <div class="right-item icon"><p>&olcross;</p></div>
             </button>
           </div>
           <div class="hamburger-menu-item hide-item">
-            <button id="sublist-button" onclick="buttonClickById(2);">
-              <div class="left-item"><p>Draw Mode</p></div>
-              <div class="right-item"><p>ON</p></div>
+            <button id="sublist-button" onclick="buttonClickById(CLEAR_STORAGE);">
+              <div class="left-item"><p>Reset Storage</p></div>
+              <div class="right-item icon"><p>&olcross;</p></div>
             </button>
           </div>
           <div class="hamburger-menu-item hide-item">
-            <button id="sublist-button" onclick="buttonClickById(3);">
+            <button id="sublist-button" onclick="buttonClickById(PRINT_STORAGE);">
+              <div class="left-item"><p>Print Storage</p></div>
+              <div class="right-item"><p>P</p></div>
+            </button>
+          </div>
+          <div class="hamburger-menu-item hide-item">
+            <button id="sublist-button" onclick="buttonClickById(FPS_TOGGLE);">
+              <div class="left-item"><p>FPS Show/Hide</p></div>
+              <div class="right-item"><p id="FPS_TOGGLE"></p></div>
+            </button>
+          </div>
+          <div class="hamburger-menu-item hide-item">
+            <button id="sublist-button" onclick="buttonClickById(DRAW_MODE_TOGGLE);">
+              <div class="left-item"><p>Draw Mode</p></div>
+              <div class="right-item" id="DRAW_MODE_TOGGLE"><p></p></div>
+            </button>
+          </div>
+          <div class="hamburger-menu-item hide-item">
+            <button id="sublist-button" onclick="buttonClickById(PAN_ZOOM_MODE_TOGGLE);">
               <div class="left-item"><p>Pan/Zoom Mode</p></div>
-              <div class="right-item"><p>OFF</p></div>
+              <div class="right-item"><p id="PAN_ZOOM_MODE_TOGGLE"></p></div>
             </button>
           </div>
           <div class="hamburger-menu-item hide-item">
@@ -84,7 +104,6 @@
               <div class="right-item"><p>?</p></div>
             </button>
           </div>
-          <div class="hamburger-menu-item hide-item"></div>
           <div class="hamburger-menu-item hide-item"></div>
           <div class="hamburger-menu-item hide-item"></div>
           <div class="hamburger-menu-item hide-item"></div>
