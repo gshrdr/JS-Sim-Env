@@ -24,6 +24,8 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [ ] Improvements to tile map engine: ability to select individual tiles, chunk-based more efficient rendering system
 - [ ] Improve entities system, create an entity component that can be added to any object to update it at 60x per second
 - [ ] Add the ability to save/download & load world/game state
+- [ ] In-game notification system that allows me to send notifications to the user with a drop down from the top of the screen
+- [ ] In-game console/terminal system that allows me to display console logs to the user (useful for mobile devices that don't have a developer console)
 - [ ] Explore a multi-player system with web sockets for a real time connection between multiple people playing/accessing the same game board
 - [ ] Explore a Redis cache database for super fast real-time data storage
 - [ ] Explore an XML/HTTP based REST API built with PHP for server communication
