@@ -42,7 +42,6 @@ class TilemapGenerator {
   // Retrieve color by map (row, col) location
   retrieveTileColor(row, col) {
     return `#${TILESET[`${this.map[row][col]}`]}`;
-    //return this.map[row][col];
   }
 
   /* Internal TilemapGenerator helper functions */
@@ -84,12 +83,6 @@ class TilemapGenerator {
              noiseModified = (noise + 1) / 2;
            }
 
-           // console.log("Noise: " + noise + " Mod: " + noiseModified);
-           /*
-           let cv = 255 * noiseModified;
-           this.map[row][col] = `rgb(${cv}, ${cv}, ${cv})`;
-           */
-
            let cv = 255 * noiseModified;
 
            if (cv <= 85) {
@@ -103,6 +96,13 @@ class TilemapGenerator {
            } else {
              this.map[row][col] = "darkGrass";
            }
+
+           /* White/black debug
+           console.log("Noise: " + noise + " Mod: " + noiseModified);
+           let cv = 255 * noiseModified;
+           this.map[row][col] = `rgb(${cv}, ${cv}, ${cv})`;
+           ==> retrieveTileColor: return this.map[row][col];
+           */
          }
        }
     }
