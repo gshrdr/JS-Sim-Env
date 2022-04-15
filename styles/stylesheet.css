@@ -22,7 +22,7 @@
 
 body {
   font-family: sans-serif;
-  color: #111827;;
+  color: white;
   background-color: #111827;
 }
 
@@ -101,14 +101,16 @@ body {
   flex: 0 1 40px;
 }
 
-.mini-content-overlay {
+#mini-content-overlay {
+  background-color: rgba(0, 0, 0, 0.8);
   z-index: 1000;
   position: absolute;
   display: block;
   top: 0;
   left: 0;
-  background-color: rgba(0, 0, 0, 0.85);
   padding: 10px;
+  transition: background-color 0.4s linear;
+  -webkit-transition: background-color 0.4s linear;
 }
 
 /*
@@ -395,7 +397,7 @@ canvas {
   .box .row.header, .box .row.header .container-top, .box .row.footer {
     display: block;
   }
-  .mini-content-overlay {
+  #mini-content-overlay {
     display: none;
   }
 

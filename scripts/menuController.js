@@ -36,12 +36,25 @@ function menuButtonClick() {
   // Flip menu boolean toggle
   menuIsActivated = !menuIsActivated;
 
+  // Update mini device overlay menu
+  updateMiniMenuOverlayColor();
+
   // Run menu & elements animations
   runMenuButtonAnimation();
   runMenuElementsAnimation();
 
   // Debug log
   if (shouldLogHamburgerMenuButtonDebug) console.log("Hamburger button press | Menu status: " + (menuIsActivated ? "Open" : "Closed"));
+}
+
+// Update the miniature overlay window shown on mobile devices
+function updateMiniMenuOverlayColor() {
+   const miniOverlay = document.getElementById("mini-content-overlay");
+   if (menuIsActivated) {
+     miniOverlay.style.backgroundColor = "#111827";
+   } else {
+     miniOverlay.style.backgroundColor = "rgba(0, 0, 0, 0.8)";
+   }
 }
 
 // Run hamburger button animation
