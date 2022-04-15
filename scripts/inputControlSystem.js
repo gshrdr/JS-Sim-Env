@@ -22,10 +22,6 @@ let recentTouchTimeStamp;
 let x = 0;
 let y = 0;
 
-// Pinch to zoom positions/delta
-let evCache = new Array();
-var prevDiff = -1;
-
 // Initial window load - set canvas size
 setTimeout(function() {
   drawableCanvas.width = canvasContainer.clientWidth;
@@ -51,38 +47,6 @@ if(isTouchDevice()){
   /* Listen for touch events - this is a touch screen */
 
   if (logEventsDebug) console.log("Touch based device");
-
-  /* Handle pointer events - pinch/zoom */
-  drawableCanvas.onpointerdown = pointerdown_handler;
-  drawableCanvas.onpointermove = pointermove_handler;
-  drawableCanvas.onpointerup = pointerup_handler;
-  drawableCanvas.onpointercancel = pointerup_handler;
-  drawableCanvas.onpointerout = pointerup_handler;
-  drawableCanvas.onpointerleave = pointerup_handler;
-
-  function pointerdown_handler(ev) {
-   // The pointerdown event signals the start of a touch interaction.
-   // This event is cached to support 2-finger gestures
-   evCache.push(ev);
-   if (logEventsDebug) console.log("pointerDown");
-  }
-
-  function pointermove_handler(ev) {
-    // Handle pinch/zoom
-    if (PAN_ZOOM_MODE) handlePinchZoom(ev);
-  }
-
-  function pointerup_handler(ev) {
-    if (logEventsDebug) console.log("pointerUp");
-
-    // Reset pinch/zoom controls
-    removeCacheEvent(ev);
-
-    // If the number of pointers down is less than two then reset diff tracker
-    if (evCache.length < 2) {
-      prevDiff = -1;
-    }
-  }
 
   /* Handle touch events - draw & pan screen */
 
@@ -272,49 +236,6 @@ function handleScrollWheel(e) {
     resizeTilemap();
     redrawTilemap(true);
   }, 1000);
-}
-
-// Touch based 2 finger pinch/zoom
-function handlePinchZoom(ev) {
-  // Find this event in the cache and update its record with this event
-  for (var i = 0; i < evCache.length; i++) {
-    if (ev.pointerId == evCache[i].pointerId) {
-       evCache[i] = ev;
-       break;
-    }
-  }
-
-  // If two pointers are down, check for pinch gestures
-   if (evCache.length == 2) {
-     // Calculate the distance between the two pointers
-     var curDiff = Math.abs(evCache[0].clientX - evCache[1].clientX);
-
-     if (prevDiff > 0) {
-       if (curDiff > prevDiff) {
-         // The distance between the two pointers has increased
-         if (logEventsDebug) console.log("Pinch moving OUT -> Zoom in");
-       }
-       if (curDiff < prevDiff) {
-         // The distance between the two pointers has decreased
-         if (logEventsDebug) console.log("Pinch moving IN -> Zoom out");
-
-       }
-     }
-
-     // Cache the distance for the next move event
-     prevDiff = curDiff;
-   }
-}
-
-// Helper function - remove event from pinch/zoom cache
-function removeCacheEvent(ev) {
-  // Remove this event from the target's cache
-  for (var i = 0; i < evCache.length; i++) {
-    if (evCache[i].pointerId == ev.pointerId) {
-      evCache.splice(i, 1);
-      break;
-    }
-  }
 }
 
 /* Draw to the canvas */
