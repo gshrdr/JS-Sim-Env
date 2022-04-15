@@ -178,6 +178,7 @@ if(isTouchDevice()){
 
   // Listen for mouse scroll events
   let wheelTimer = null;
+  let previousScale = TILEMAP_SCALE;
   canvasContainer.addEventListener('wheel', function (e) {
     if (logEventsDebug && PAN_ZOOM_MODE) console.log("Scroll event - update canvas scale")
 
@@ -186,19 +187,21 @@ if(isTouchDevice()){
 
     // Update game state depending on toggle mode selections
     if (PAN_ZOOM_MODE) {
-      // Update scale
+      // Update & restrict scale
       TILEMAP_SCALE += event.deltaY * -0.01;
-
-      // Restrict scale
       TILEMAP_SCALE = Math.min(Math.max(.125, TILEMAP_SCALE), 2);
 
-      // Update x/y position
-      //TILEMAP_X_MOD = TILEMAP_X_MOD
-      //TILEMAP_Y_MOD =
+      // Update x/y position using the delta between the new scale and previous scale
+      let scaleDelta = TILEMAP_SCALE / previousScale;
+      TILEMAP_X_MOD /= scaleDelta
+      TILEMAP_Y_MOD /= scaleDelta
 
       // Apply scale transform
       resizeTilemap();
       redrawTilemap();
+
+      // Set values necessary for previous scale & position deltas
+      previousScale = TILEMAP_SCALE;
 
       // Listen for end of scroll event
       if(wheelTimer !== null) {
