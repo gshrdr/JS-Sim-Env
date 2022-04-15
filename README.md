@@ -18,6 +18,7 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [x] Update game camera system with ability to toggle between pan/zoom and draw mode
 - [x] Build a JavaScript based tile map engine that can render a basic grid of tiles
 - [x] Integrate perlin noise based terrain generation
+- [x] Create a menu system that allows me to input and toggle game commands
 - [ ] Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
 - [ ] Improve zoom in/out functionality to zoom onto the mouse position, rather than zoom in/out from (0, 0)
 - [ ] Improvements to tile map engine: ability to select individual tiles, chunk-based more efficient rendering system
