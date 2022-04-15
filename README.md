@@ -23,7 +23,8 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [x] Better support for touch/mouse cancel/leave events - if the mouse/pointer leaves the screen the movement event should stop
 - [x] Add reset scale/transform position button to bring game canvas back to starting state
 - [x] Add a button to generate massive tilemaps to test the performance of this system
-- [ ] Bug fix for "mouse out" and "mouse leave" events - canvasContainer is incorrectly telling the inputControl system that the mouse has left the container and is stopping the pan/draw functions erroneously - why is mouse out and mouse leave being called?
+- [ ] Bug fix: "mouse out" and "mouse leave" events - canvasContainer is incorrectly telling the inputControl system that the mouse has left the container and is stopping the pan/draw functions erroneously - why is mouse out and mouse leave being called?
+- [ ] Bug fix: Right click or click to inspect element can end up where the pan/draw keeps going even when you're not holding the left button
 - [ ] Improve zoom in/out functionality to zoom onto the mouse/pointer position, rather than zoom in/out from (0, 0)
 - [ ] Improvements to tile map engine: ability to select individual tiles, chunk-based more efficient rendering system
 - [ ] Improve entities system, create an entity component that can be added to any object to update it at 60x per second
