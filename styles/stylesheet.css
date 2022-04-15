@@ -107,7 +107,7 @@ body {
   display: block;
   top: 0;
   left: 0;
-  background-color: #111827;
+  background-color: rgba(0, 0, 0, 0.85);
   padding: 10px;
 }
 
