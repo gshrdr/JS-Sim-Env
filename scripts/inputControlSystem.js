@@ -172,7 +172,7 @@ if(isTouchDevice()){
 
 function drawLine(context, x1, y1, x2, y2) {
   context.beginPath();
-  context.strokeStyle = 'blue';
+  context.strokeStyle = 'orange';
   context.lineWidth = 4;
   context.moveTo(x1, y1);
   context.lineTo(x2, y2);

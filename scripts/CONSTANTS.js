@@ -54,6 +54,25 @@ function retrieveMenuIDValue(Id) {
   }
 }
 
+/* Tile generation constants */
+
+// Tilemap height/width
+const TILEMAP_HEIGHT = 300;
+const TILEMAP_WIDTH = 300;
+
+// Individual tile size
+const TILESIZE = 15;
+
+// Tileset color dictionary
+const TILESET = {
+  "water": "0000FF",
+  "grass": "378805",
+  "red": "FF0000",
+  "yellow": "FFFF00",
+  "pink": "FFC0CB",
+  "orange": "FFA500",
+}
+
 /* Console Debug Logs */
 
 // localStorageHandler.js

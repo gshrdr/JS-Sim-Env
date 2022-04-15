@@ -2,17 +2,6 @@
  * Generate and draw tilemaps
  */
 
-// Tile generation constants
-const TILESIZE = 15;
-const TILESET = {
-  "water": "0000FF",
-  "grass": "378805",
-  "red": "FF0000",
-  "yellow": "FFFF00",
-  "pink": "FFC0CB",
-  "orange": "FFA500",
-}
-
 class TilemapGenerator {
 
   /* Construct a TilemapGenerator object */
@@ -67,7 +56,7 @@ class TilemapGenerator {
   generateEmptyMap() {
     this.map = new Array(this.height);
     for (let i = 0; i < this.height; i++) {
-      this.map[i] = new Array(this.width).fill(0);
+      this.map[i] = new Array(this.width).fill("red");
     }
   }
 
@@ -84,7 +73,8 @@ class TilemapGenerator {
          } else if (col == this.width - 1 && row == this.height - 1) { // bottom right
            this.map[row][col] = "orange";
          } else {
-           let noise = perlin.get(this.width/(col + 1), this.height/(row + 1));
+           // Non-special corner cases, input terrain from perlin noise map
+           let noise = perlin.get(this.height/(row + 1), this.width/(col + 1));
            if (noise <= -0.05) {
              this.map[row][col] = "water";
            } else {

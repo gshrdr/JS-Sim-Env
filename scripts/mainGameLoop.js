@@ -20,7 +20,7 @@ let gameLoopOverrideHasBeenTriggered = false;
 // Load Initial Canvas On Window Load
 window.onload = function() {
   // Setup tilemap generator
-  tilemapGenerator = new TilemapGenerator(300, 150);
+  tilemapGenerator = new TilemapGenerator(TILEMAP_HEIGHT, TILEMAP_WIDTH);
 
   // Initial Draw Call + Resize
   if (shouldLogInitialDraw) console.log("INITIAL DRAW: Canvas Width: " + tilemapCanvas.width + " Canvas Height: " + tilemapCanvas.height + " Container Width: " + container.clientWidth + " Container Height: " + container.clientHeight);
