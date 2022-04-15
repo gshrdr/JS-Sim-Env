@@ -22,6 +22,8 @@ const DRAW_MODE_TOGGLE = keyIterator; keyIterator++;
 const PAN_ZOOM_MODE_TOGGLE = keyIterator; keyIterator++;
 const GAME_LOOP_TOGGLE = keyIterator; keyIterator++;
 const REGEN_TERRAIN = keyIterator; keyIterator++;
+const RESET_CANVAS = keyIterator; keyIterator++;
+const MASSIVE_TILEMAP = keyIterator; keyIterator++;
 
 // All scrolling menu IDs which represent a toggle-able local storage control boolean
 const ALL_TOGGLEABLE_MENU_IDS = [CONSOLE_LOGS_TOGGLE, FPS_TOGGLE, DRAW_MODE_TOGGLE, PAN_ZOOM_MODE_TOGGLE, GAME_LOOP_TOGGLE];
@@ -49,6 +51,10 @@ function retrieveMenuIDValue(Id) {
       return "GAME_LOOP_TOGGLE";
     case REGEN_TERRAIN:
       return "REGEN_TERRAIN";
+    case RESET_CANVAS:
+      return "RESET_CANVAS";
+    case MASSIVE_TILEMAP:
+      return "MASSIVE_TILEMAP";
     default:
       return null;
   }
@@ -57,18 +63,18 @@ function retrieveMenuIDValue(Id) {
 /* Tile generation constants */
 
 // Overall tilemap canvas scale + translations - pan/zoom
-const TILEMAP_SCALE_MIN = .125;
+const TILEMAP_SCALE_MIN = .1;
 const TILEMAP_SCALE_MAX = 2;
 let TILEMAP_SCALE = 0.5;
 let TILEMAP_X_MOD = 0;
 let TILEMAP_Y_MOD = 0;
 
 // Tilemap height/width
-const TILEMAP_HEIGHT = 150;
-const TILEMAP_WIDTH = 150;
+let TILEMAP_HEIGHT = 150;
+let TILEMAP_WIDTH = 150;
 
 // Tile map ruggedness - higher number = more definition
-const TERRAIN_RUGGEDNESS = 10;
+let TERRAIN_RUGGEDNESS = 10;
 
 // Individual tile size
 const TILESIZE = 20;

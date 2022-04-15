@@ -21,6 +21,8 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [x] Create a menu system that allows me to input and toggle game commands
 - [x] Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
 - [x] Better support for touch/mouse cancel/leave events - if the mouse/pointer leaves the screen the movement event should stop
+- [x] Add reset scale/transform position button to bring game canvas back to starting state
+- [x] Add a button to generate massive tilemaps to test the performance of this system 
 - [ ] Improve zoom in/out functionality to zoom onto the mouse/pointer position, rather than zoom in/out from (0, 0)
 - [ ] Improvements to tile map engine: ability to select individual tiles, chunk-based more efficient rendering system
 - [ ] Improve entities system, create an entity component that can be added to any object to update it at 60x per second

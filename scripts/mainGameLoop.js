@@ -122,6 +122,38 @@ window.addEventListener('resize', () => {
  * Game Loop Helper Functions
  */
 
+// Reset game canvas scale and positions
+function resetGameCanvas() {
+  // Reset scale & x/y transforms
+  TILEMAP_SCALE = 0.5;
+  TILEMAP_X_MOD = 0;
+  TILEMAP_Y_MOD = 0;
+
+  // Reset & redraw canvas elements + forcefully regenerate tilemap background element
+  resizeTilemap();
+  redrawTilemap(true);
+  resizeEntities();
+  redrawEntities();
+}
+
+// Generate big tilemap
+function generateMassiveTilemap() {
+  // Update tilemap height/width values + terrain ruggedness
+  TILEMAP_HEIGHT = 300;
+  TILEMAP_WIDTH = 300;
+  TERRAIN_RUGGEDNESS = 20;
+
+  // Generate new tilemap object
+  tilemapGenerator = new TilemapGenerator(TILEMAP_HEIGHT, TILEMAP_WIDTH);
+
+  // Completely regenerate and redraw terrain
+  regenerateTerrain();
+
+  // Resize & redraw entities layer
+  resizeEntities();
+  redrawEntities();
+}
+
 // Debounce event handler with timer
 function debounce(func, time){
     var time = time || 100; // 100 by default if no param
@@ -196,6 +228,19 @@ let hasGeneratedInitialTilemap = false;
 let hasGeneratedOffScreenCanvas = false;
 let offScreenCanvas;
 
+// Completely regenerate terrain and tilemap - triggered from menu button press
+function regenerateTerrain() {
+  // Refresh perlin noise map
+  perlin.seed();
+
+  // Reset TilemapGenerator map
+  tilemapGenerator.generateTilemap();
+
+  // Redraw tilemap on canvas
+  resizeTilemap();
+  redrawTilemap(true);
+}
+
 // Main Redraw Function - Tilemap Layer
 function redrawTilemap(shouldRegenerate = false) {
   // Set tilemap canvas scale
@@ -214,19 +259,6 @@ function redrawTilemap(shouldRegenerate = false) {
       drawOffScreenTilemap();
     }
   }
-}
-
-// Completely regenerate terrain and tilemap - triggered from menu button press
-function regenerateTerrain() {
-  // Refresh perlin noise map
-  perlin.seed();
-
-  // Reset TilemapGenerator map
-  tilemapGenerator.generateTilemap();
-
-  // Redraw tilemap on canvas
-  resizeTilemap();
-  redrawTilemap(true);
 }
 
 // Step 1 - Generate the tilemap's off screen canvas element
@@ -251,6 +283,10 @@ function generateInitialTilemap() {
   } else {
     // Get off screen context
     const ctx = offScreenCanvas.getContext("2d");
+
+    // Reset size
+    offScreenCanvas.width = TILEMAP_WIDTH * TILESIZE;
+    offScreenCanvas.height = TILEMAP_HEIGHT * TILESIZE;
 
     // Clear canvas
     ctx.clearRect(0, 0, offScreenCanvas.width, offScreenCanvas.height);

@@ -178,6 +178,14 @@ function buttonClickById(Id) {
       logButtonClickDebug(retrieveMenuIDValue(Id));
       updateStateForId(Id);
       break;
+    case RESET_CANVAS:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
+    case MASSIVE_TILEMAP:
+      logButtonClickDebug(retrieveMenuIDValue(Id));
+      updateStateForId(Id);
+      break;
     default:
       logButtonClickDebug(retrieveMenuIDValue(Id));
       break;
@@ -197,6 +205,8 @@ function updateStateForId(Id) {
     case PAN_ZOOM_MODE_TOGGLE: toggleState(Id); break;
     case GAME_LOOP_TOGGLE: toggleState(Id); break;
     case REGEN_TERRAIN: regenerateTerrain(); break;
+    case RESET_CANVAS: resetGameCanvas(); break;
+    case MASSIVE_TILEMAP: generateMassiveTilemap(); break;
     default: break;
   }
 }
