@@ -274,12 +274,8 @@ function drawTilemap(ctx) {
       ctx.fillStyle = tilemapGenerator.retrieveTileColor(row, col);
       ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
 
-      // Grid - if scale >= 1
-      if (TILEMAP_SCALE >= 1) {
-        ctx.strokeStyle = "black";
-        ctx.lineWidth = 2;
-        ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
-      } else if (TILEMAP_SCALE >= 0.5) {
+      // Grid - if scale >= 0.5
+      if (TILEMAP_SCALE >= 0.5) {
         ctx.strokeStyle = "black";
         ctx.lineWidth = 4;
         ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
@@ -321,7 +317,7 @@ function redrawEntities() {
 // Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
 let positionX = 20;
 let minXPosition = 20;
-let maxXPosition = 200;
+let maxXPosition = 100;
 let speedX = 1;
 function drawRectangle(ctx) {
   // Update rectangle position x
@@ -333,15 +329,15 @@ function drawRectangle(ctx) {
   }
 
   // Update rectangle position y
-  positionY = 20;
+  positionY = 200;
 
   // Draw rectangle - solid fill
   ctx.fillStyle = 'red';
-  ctx.rect(positionX, positionY, 30, 30);
+  ctx.rect(positionX, positionY, 10, 10);
   ctx.fill();
 
   // Draw rectangle - border
   ctx.strokeStyle = 'white';
-  ctx.lineWidth = '4';
-  ctx.strokeRect(positionX, positionY, 30, 30);
+  ctx.lineWidth = '2';
+  ctx.strokeRect(positionX, positionY, 10, 10);
 }

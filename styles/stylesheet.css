@@ -86,15 +86,8 @@ body {
 .box .row.header {
   padding: 4px;
   flex: 0 1 auto; /* Shorthand for: flex-grow: 0, flex-shrink: 1, flex-basis: auto */
-}
-
-.box .row.header .container-top {
   display: none;
   margin: 10px;
-}
-.box .row.header .container-critical {
-  margin: 10px;
-  float: right;
 }
 
 .box .row.content {
@@ -106,6 +99,16 @@ body {
   display: none;
   padding: 10px;
   flex: 0 1 40px;
+}
+
+.mini-content-overlay {
+  z-index: 1000;
+  position: absolute;
+  display: block;
+  top: 0;
+  left: 0;
+  background-color: #111827;
+  padding: 10px;
 }
 
 /*
@@ -392,10 +395,7 @@ canvas {
   .box .row.header, .box .row.header .container-top, .box .row.footer {
     display: block;
   }
-  .box .row.header .container-critical {
-    float: left;
-  }
-  .box .row.header .container-toggle {
+  .mini-content-overlay {
     display: none;
   }
 
