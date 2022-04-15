@@ -308,7 +308,7 @@ function handlePinchToZoom(scaleDifference) {
 let wheelTimer = null;
 function handleScrollWheel(e) {
   // Update & restrict scale
-  TILEMAP_SCALE += e.deltaY * -0.01;
+  TILEMAP_SCALE += (e.deltaY * -0.01) * .1;
   TILEMAP_SCALE = Math.min(Math.max(TILEMAP_SCALE_MIN, TILEMAP_SCALE), TILEMAP_SCALE_MAX);
 
   // Update x/y position using the delta between the new scale and previous scale
