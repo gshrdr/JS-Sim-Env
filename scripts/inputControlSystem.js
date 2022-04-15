@@ -219,12 +219,12 @@ if(isTouchDevice()){
   })
 
   canvasContainer.addEventListener("mouseleave", function(e) {
-    if (logEventsDebug) console.log("Mouse up");
+    if (logEventsDebug) console.log("Mouse leave");
     endMouseEvent(e);
   })
 
   canvasContainer.addEventListener("mouseout", function(e) {
-    if (logEventsDebug) console.log("Mouse up");
+    if (logEventsDebug) console.log("Mouse out");
     endMouseEvent(e);
   })
 
