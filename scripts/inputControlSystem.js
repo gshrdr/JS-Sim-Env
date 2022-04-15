@@ -193,6 +193,7 @@ if(isTouchDevice()){
 
       // Update x/y position using the delta between the new scale and previous scale
       let scaleDelta = TILEMAP_SCALE / previousScale;
+
       TILEMAP_X_MOD /= scaleDelta
       TILEMAP_Y_MOD /= scaleDelta
 

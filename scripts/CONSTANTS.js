@@ -62,8 +62,8 @@ let TILEMAP_X_MOD = 0;
 let TILEMAP_Y_MOD = 0;
 
 // Tilemap height/width
-const TILEMAP_HEIGHT = 100;
-const TILEMAP_WIDTH = 100;
+const TILEMAP_HEIGHT = 150;
+const TILEMAP_WIDTH = 150;
 
 // Tile map ruggedness - higher number = more definition
 const TERRAIN_RUGGEDNESS = 10;

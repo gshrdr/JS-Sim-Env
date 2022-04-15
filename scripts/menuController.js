@@ -22,8 +22,8 @@ let animationDelayHide = 0.02;
  * Overall hamburger menu button press + menu deployment
  */
 
-// Listen for click/touch outside menu - close menu if so
-document.getElementById("canvas-container").addEventListener("click", closeMenu);
+// Listen for touch outside menu - close menu if so
+// mouse click to close - document.getElementById("canvas-container").addEventListener("click", closeMenu);
 document.getElementById("canvas-container").addEventListener("touchstart", closeMenu);
 function closeMenu() {
   if (menuIsActivated) {
