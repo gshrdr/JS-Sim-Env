@@ -279,6 +279,10 @@ function drawTilemap(ctx) {
         ctx.strokeStyle = "black";
         ctx.lineWidth = 2;
         ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
+      } else if (TILEMAP_SCALE >= 0.5) {
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 4;
+        ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
       }
     }
   }

@@ -66,6 +66,7 @@ if(isTouchDevice()){
 
       // Update game state depending on current pan/zoom or draw mode toggle selection
       if (DRAW_MODE) drawLine(context, x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
+      if (PAN_ZOOM_MODE) panTilemap(x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
 
       x = e.touches[0].clientX;
       y = e.touches[0].clientY - containerYOffset;
@@ -142,13 +143,7 @@ if(isTouchDevice()){
 
       // Update game state depending on toggle mode selections
       if (DRAW_MODE) drawLine(context, x, y, e.offsetX, e.offsetY);
-
-      if (PAN_ZOOM_MODE) {
-        TILEMAP_X_MOD -= (x - e.offsetX) / TILEMAP_SCALE;
-        TILEMAP_Y_MOD -= (y - e.offsetY) / TILEMAP_SCALE;
-        resizeTilemap();
-        redrawTilemap();
-      }
+      if (PAN_ZOOM_MODE) panTilemap(x, y, e.offsetX, e.offsetY);
 
       x = e.offsetX;
       y = e.offsetY;
@@ -215,6 +210,15 @@ if(isTouchDevice()){
       }, 1000);
     }
   });
+}
+
+/* Pan canvas */
+
+function panTilemap(x, y, offsetX, offsetY) {
+  TILEMAP_X_MOD -= (x - offsetX) / TILEMAP_SCALE;
+  TILEMAP_Y_MOD -= (y - offsetY) / TILEMAP_SCALE;
+  resizeTilemap();
+  redrawTilemap();
 }
 
 /* Draw to the canvas */
