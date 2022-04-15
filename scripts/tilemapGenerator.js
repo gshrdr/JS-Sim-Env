@@ -42,6 +42,7 @@ class TilemapGenerator {
   // Retrieve color by map (row, col) location
   retrieveTileColor(row, col) {
     return `#${TILESET[`${this.map[row][col]}`]}`;
+    //return this.map[row][col];
   }
 
   /* Internal TilemapGenerator helper functions */
@@ -74,11 +75,33 @@ class TilemapGenerator {
            this.map[row][col] = "orange";
          } else {
            // Non-special corner cases, input terrain from perlin noise map
-           let noise = perlin.get(this.height/(row + 1), this.width/(col + 1));
-           if (noise <= -0.05) {
-             this.map[row][col] = "water";
+           let noise = perlin.get((row/(this.height - 1)) * TERRAIN_RUGGEDNESS, (col/(this.width - 1)) * TERRAIN_RUGGEDNESS);
+
+           let noiseModified;
+           if (noise === 0) {
+             noiseModified = 0;
            } else {
+             noiseModified = (noise + 1) / 2;
+           }
+
+           // console.log("Noise: " + noise + " Mod: " + noiseModified);
+           /*
+           let cv = 255 * noiseModified;
+           this.map[row][col] = `rgb(${cv}, ${cv}, ${cv})`;
+           */
+
+           let cv = 255 * noiseModified;
+
+           if (cv <= 85) {
+             this.map[row][col] = "deepWater";
+           } else if (cv <= 115) {
+             this.map[row][col] = "water";
+           } else if (cv <= 135) {
+             this.map[row][col] = "sand";
+           } else if (cv <= 175) {
              this.map[row][col] = "grass";
+           } else {
+             this.map[row][col] = "darkGrass";
            }
          }
        }

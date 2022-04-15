@@ -57,16 +57,22 @@ function retrieveMenuIDValue(Id) {
 /* Tile generation constants */
 
 // Tilemap height/width
-const TILEMAP_HEIGHT = 300;
-const TILEMAP_WIDTH = 300;
+const TILEMAP_HEIGHT = 200;
+const TILEMAP_WIDTH = 200;
+
+// Tile map ruggedness - higher number = more definition
+const TERRAIN_RUGGEDNESS = 16;
 
 // Individual tile size
 const TILESIZE = 15;
 
 // Tileset color dictionary
 const TILESET = {
+  "deepWater": "0202CF",
   "water": "0000FF",
+  "sand": "CADB07",
   "grass": "378805",
+  "darkGrass": "265C05",
   "red": "FF0000",
   "yellow": "FFFF00",
   "pink": "FFC0CB",

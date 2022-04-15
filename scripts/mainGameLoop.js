@@ -200,7 +200,6 @@ let offScreenCanvas;
 function redrawTilemap(shouldRegenerate = false) {
   // Get canvas context + ensure horizontal/vertical scale is fixed to a 1:1 ratio
   const ctx = tilemapCanvas.getContext("2d");
-  ctx.scale(1, 1);
 
   // Check if we have already generated tilemap offscreen, if so copy to main context, otherwise re-draw
   if (hasGeneratedInitialTilemap == false) {
