@@ -315,10 +315,10 @@ function redrawEntities() {
 }
 
 // Draw Rectangle - Showcases how the animation loop works (only during a window resize event)
-let positionX = 20;
-let minXPosition = 20;
-let maxXPosition = 100;
-let speedX = 1;
+let positionX = 100;
+let minXPosition = 100;
+let maxXPosition = 150;
+let speedX = 0.5;
 function drawRectangle(ctx) {
   // Update rectangle position x
   if (GAME_LOOP_OVERRIDE) {

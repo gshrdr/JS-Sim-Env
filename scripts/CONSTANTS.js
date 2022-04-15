@@ -57,6 +57,8 @@ function retrieveMenuIDValue(Id) {
 /* Tile generation constants */
 
 // Overall tilemap canvas scale + translations - pan/zoom
+const TILEMAP_SCALE_MIN = .125;
+const TILEMAP_SCALE_MAX = 2;
 let TILEMAP_SCALE = 0.5;
 let TILEMAP_X_MOD = 0;
 let TILEMAP_Y_MOD = 0;
