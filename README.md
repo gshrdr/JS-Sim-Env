@@ -1,7 +1,5 @@
 # JS-Sim-Env
-**Note: This is my current project and it is a work in progress, this project was started 04/10/2022; expect to see updates, more information, and a live code demo in the coming weeks.**
-
-A JavaScript Browser Simulation Game Environment.
+A JavaScript Browser Simulation Game Environment. This project is a work-in-progress, I started it on 04/10/22.
 
 This project is a part of my website & portfolio: [gavinshr.com](https://gavinshr.com)  
 
@@ -17,9 +15,14 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [x] Setup a GitHub repository
 - [x] Get a live code demo working, host this code demo on [gavinshr.com](https://gavinshr.com), include a link to this project with information & an image on my [projects page](https://gavinshr.com/projects), and update the live code demo link at the top of this ReadMe file
 - [x] Build a JavaScript update based game loop so I can update entities across the map programmatically 60x per second
-- [ ] Update game camera system with ability to toggle between pan/zoom and draw mode (on screen menu button for touch/browser + keyboard button press toggle controls)
-- [ ] Build a JavaScript based tile map engine to render my worlds complete with automatic resizing, cross-browser & mobile (touch) compatibility, the ability to select individual tiles with a mouse/touch input, the ability to scroll throughout the tile map with a chunk-based rendering system, and the ability to zoom in/out
-- [ ] Build a tilemap world generation engine complete with programmatically generated terrain and the ability to save/download your map and game data state
+- [x] Update game camera system with ability to toggle between pan/zoom and draw mode
+- [x] Build a JavaScript based tile map engine that can render a basic grid of tiles
+- [x] Integrate perlin noise based terrain generation
+- [ ] Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
+- [ ] Improve zoom in/out functionality to zoom onto the mouse position, rather than zoom in/out from (0, 0)
+- [ ] Improvements to tile map engine: ability to select individual tiles, chunk-based more efficient rendering system
+- [ ] Improve entities system, create an entity component that can be added to any object to update it at 60x per second
+- [ ] Add the ability to save/download & load world/game state
 - [ ] Explore a multi-player system with web sockets for a real time connection between multiple people playing/accessing the same game board
 - [ ] Explore a Redis cache database for super fast real-time data storage
 - [ ] Explore an XML/HTTP based REST API built with PHP for server communication
