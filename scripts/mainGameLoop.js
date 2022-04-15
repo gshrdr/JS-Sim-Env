@@ -143,6 +143,7 @@ function generateMassiveTilemap() {
   TILEMAP_WIDTH = 300;
   TERRAIN_RUGGEDNESS = 20;
   TILESIZE = 10;
+  TILEMAP_GRID_WIDTH = 2;
 
   // Generate new tilemap object
   tilemapGenerator = new TilemapGenerator(TILEMAP_HEIGHT, TILEMAP_WIDTH);
@@ -310,7 +311,7 @@ function drawTilemap(ctx) {
       // Grid - if scale >= 0.5
       if (TILEMAP_SCALE >= 0.5) {
         ctx.strokeStyle = "black";
-        ctx.lineWidth = 4;
+        ctx.lineWidth = TILEMAP_GRID_WIDTH;
         ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
       }
     }
