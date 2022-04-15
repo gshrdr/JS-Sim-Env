@@ -142,6 +142,7 @@ function generateMassiveTilemap() {
   TILEMAP_HEIGHT = 300;
   TILEMAP_WIDTH = 300;
   TERRAIN_RUGGEDNESS = 20;
+  TILESIZE = 10;
 
   // Generate new tilemap object
   tilemapGenerator = new TilemapGenerator(TILEMAP_HEIGHT, TILEMAP_WIDTH);
@@ -283,10 +284,6 @@ function generateInitialTilemap() {
   } else {
     // Get off screen context
     const ctx = offScreenCanvas.getContext("2d");
-
-    // Reset size
-    offScreenCanvas.width = TILEMAP_WIDTH * TILESIZE;
-    offScreenCanvas.height = TILEMAP_HEIGHT * TILESIZE;
 
     // Clear canvas
     ctx.clearRect(0, 0, offScreenCanvas.width, offScreenCanvas.height);
