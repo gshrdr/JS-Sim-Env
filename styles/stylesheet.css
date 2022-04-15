@@ -243,7 +243,7 @@ canvas {
   z-index: 10;
   position: absolute;
   background-color: #111827;
-  top: calc(var(--menu-button-size-sm) + 16px);
+  top: calc(var(--menu-button-size-sm) + 20px);
   right: 0;
   bottom: 0;
   padding: 10px;
@@ -405,7 +405,7 @@ canvas {
     width: var(--menu-button-size-lg);
   }
   .menu-button-background {
-    height: calc(var(--menu-button-size-lg) + 20px);
+    height: calc(var(--menu-button-size-lg) + 16px);
   }
   .icon-1, .icon-2, .icon-3 {
     width: var(--hamburger-line-size-lg);
