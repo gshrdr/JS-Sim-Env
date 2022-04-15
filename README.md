@@ -19,9 +19,9 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - [x] Build a JavaScript based tile map engine that can render a basic grid of tiles
 - [x] Integrate perlin noise based terrain generation
 - [x] Create a menu system that allows me to input and toggle game commands
-- [ ] Better support for touch/mouse cancel/leave events - if the mouse/pointer leaves the screen the movement event should stop
-- [ ] Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
-- [ ] Improve zoom in/out functionality to zoom onto the mouse position, rather than zoom in/out from (0, 0)
+- [x] Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
+- [x] Better support for touch/mouse cancel/leave events - if the mouse/pointer leaves the screen the movement event should stop
+- [ ] Improve zoom in/out functionality to zoom onto the mouse/pointer position, rather than zoom in/out from (0, 0)
 - [ ] Improvements to tile map engine: ability to select individual tiles, chunk-based more efficient rendering system
 - [ ] Improve entities system, create an entity component that can be added to any object to update it at 60x per second
 - [ ] Add the ability to save/download & load world/game state

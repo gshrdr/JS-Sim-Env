@@ -214,8 +214,22 @@ if(isTouchDevice()){
   })
 
   canvasContainer.addEventListener("mouseup", function(e) {
+    if (logEventsDebug) console.log("Mouse up");
+    endMouseEvent(e);
+  })
+
+  canvasContainer.addEventListener("mouseleave", function(e) {
+    if (logEventsDebug) console.log("Mouse up");
+    endMouseEvent(e);
+  })
+
+  canvasContainer.addEventListener("mouseout", function(e) {
+    if (logEventsDebug) console.log("Mouse up");
+    endMouseEvent(e);
+  })
+
+  function endMouseEvent(e) {
     if (mouseIsCurrentlyDown) {
-      if (logEventsDebug) console.log("Mouse up")
       mouseIsCurrentlyDown = false;
 
       // Update game state depending on toggle mode selections
@@ -224,7 +238,7 @@ if(isTouchDevice()){
       x = 0;
       y = 0;
     }
-  })
+  }
 
   canvasContainer.addEventListener('dblclick', function (e) {
     if (logEventsDebug) console.log("Double click event")
