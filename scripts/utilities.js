@@ -7,3 +7,14 @@ function getRandomRgb() {
   var b = num & 255;
   return 'rgb(' + r + ', ' + g + ', ' + b + ')';
 }
+
+// Get distance between two points
+// Source: https://stackoverflow.com/questions/20916953/get-distance-between-two-points-in-canvas
+function getDistance(x1, y1, x2, y2) {
+  var a = x1 - x2;
+  var b = y1 - y2;
+
+  var c = Math.sqrt( a*a + b*b );
+
+  return c;
+}

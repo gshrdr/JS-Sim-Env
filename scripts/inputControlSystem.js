@@ -48,8 +48,12 @@ if(isTouchDevice()){
 
   if (logEventsDebug) console.log("Touch based device");
 
+  // Touch point difference used for pinch/zoom
+  let prevDistance = null;
+
   /* Handle touch events - draw & pan screen */
 
+  // Touch start events
   drawableCanvas.addEventListener("touchstart", function(e) {
     if (logEventsDebug) console.log("Touch start")
 
@@ -60,29 +64,74 @@ if(isTouchDevice()){
     e.preventDefault();
 
     // Handle touch started
-    mouseIsCurrentlyDown = true;
-    let containerYOffset = canvasContainer.getBoundingClientRect().top
-    x = e.touches[0].clientX;
-    y = e.touches[0].clientY - containerYOffset;
-  });
-
-  drawableCanvas.addEventListener("touchmove", function(e) {
-    e.preventDefault();
-
-    if (mouseIsCurrentlyDown) {
-      if (logEventsDebug) console.log("Touch move")
-      let containerYOffset = canvasContainer.getBoundingClientRect().top
-
-      // Update game state depending on current pan/zoom or draw mode toggle selection
-      if (DRAW_MODE) drawLine(context, x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
-      if (PAN_ZOOM_MODE) panTilemap(x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
-
-      // Handle draw/pan movement
+    if (mouseIsCurrentlyDown === false) {
+      mouseIsCurrentlyDown = true;
+      let containerYOffset = canvasContainer.getBoundingClientRect().top;
       x = e.touches[0].clientX;
       y = e.touches[0].clientY - containerYOffset;
     }
   });
 
+  // Touch move events
+  drawableCanvas.addEventListener("touchmove", function(e) {
+    e.preventDefault();
+
+    if (mouseIsCurrentlyDown) {
+      if (logEventsDebug) console.log("Touch move")
+
+      let containerYOffset = canvasContainer.getBoundingClientRect().top
+
+      if (e.touches.length == 1 && e.changedTouches.length == 1) {
+        // 1 touch is active - Handle draw or pan screen
+
+        // Update game state depending on current pan/zoom or draw mode toggle selection
+        if (DRAW_MODE) drawLine(context, x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
+        if (PAN_ZOOM_MODE) panTilemap(x, y, e.touches[0].clientX, (e.touches[0].clientY - containerYOffset));
+
+        // Handle draw/pan movement
+        x = e.touches[0].clientX;
+        y = e.touches[0].clientY - containerYOffset;
+      } else if (e.touches.length == 2 && e.changedTouches.length == 2) {
+        // 2 touches are active - Handle pinch to zoom
+        if (PAN_ZOOM_MODE) {
+          // Retrieve touch 1 & 2 x/y coordinates to use for distance between points
+          let touch1X = e.touches[0].clientX;
+          let touch1Y = e.touches[0].clientY;
+          let touch2X = e.touches[1].clientX;
+          let touch2Y = e.touches[1].clientY;
+
+          // Ensure all touches are in bounds
+          if (touch1X >= 0 && touch1Y >= 0 && touch2X >= 0 && touch2Y >= 0) {
+            // Get distance between points
+            let distance = getDistance(touch1X, touch1Y, touch2X, touch2Y);
+            if (logEventsDebug) console.log("(X1, Y1): " + touch1X + ", " + touch1Y + " (X2, Y2): " + touch2X + ", " + touch2Y + " Pinch to zoom, distance between points: " + distance);
+
+            // Check if previous distance is null, otherwise proceed to check for zoom in/out event
+            if (prevDistance === null) {
+              prevDistance = distance;
+            } else {
+              if (distance > prevDistance) {
+                let scaleDifference = distance / prevDistance;
+                if (logEventsDebug) console.log("Pinch moving OUT -> Zoom IN | Scale: " + scaleDifference);
+                handlePinchToZoom(scaleDifference);
+              } else if (distance < prevDistance) {
+                let scaleDifference = distance / prevDistance;
+                if (logEventsDebug) console.log("Pinch moving IN -> Zoom OUT | Scale: " + scaleDifference);
+                handlePinchToZoom(scaleDifference);
+              }
+
+              // Set previous distance to current distance for next pinch iteration
+              prevDistance = distance;
+            }
+          } else {
+            if (logEventsDebug) console.warn("Touch out of bounds - unable to pinch to zoom");
+          }
+        }
+      }
+    }
+  });
+
+  // Touch end events
   drawableCanvas.addEventListener("touchend", function(e) {
     e.preventDefault();
 
@@ -93,6 +142,7 @@ if(isTouchDevice()){
       mouseIsCurrentlyDown = false;
       x = 0;
       y = 0;
+      prevDistance = null;
     }
   });
 
@@ -106,6 +156,7 @@ if(isTouchDevice()){
       mouseIsCurrentlyDown = false;
       x = 0;
       y = 0;
+      prevDistance = null;
     }
   });
 
@@ -206,9 +257,41 @@ function panTilemap(x, y, offsetX, offsetY) {
 
 /* Scroll & Pinch/zoom canvas */
 
+// Track previous scale so we can translate x/y transforms
+let previousScale = TILEMAP_SCALE;
+
+let pinchTimer = null;
+function handlePinchToZoom(scaleDifference) {
+  // Update & restrict scale
+  TILEMAP_SCALE *= scaleDifference;
+  TILEMAP_SCALE = Math.min(Math.max(TILEMAP_SCALE_MIN, TILEMAP_SCALE), TILEMAP_SCALE_MAX);
+
+  // Update x/y position using the delta between the new scale and previous scale
+  let scaleDelta = TILEMAP_SCALE / previousScale;
+
+  TILEMAP_X_MOD /= scaleDelta
+  TILEMAP_Y_MOD /= scaleDelta
+
+  // Apply scale transform
+  resizeTilemap();
+  redrawTilemap();
+
+  // Set values necessary for previous scale & position deltas
+  previousScale = TILEMAP_SCALE;
+
+  // Listen for end of scroll event
+  if(pinchTimer !== null) {
+    clearTimeout(pinchTimer);
+  }
+  pinchTimer = setTimeout(function() {
+    if (logEventsDebug) console.warn("Pinch to zoom event ended - regenerate tilemap");
+    resizeTilemap();
+    redrawTilemap(true);
+  }, 1000);
+}
+
 // Scroll wheel pinch/zoom
 let wheelTimer = null;
-let previousScale = TILEMAP_SCALE;
 function handleScrollWheel(e) {
   // Update & restrict scale
   TILEMAP_SCALE += e.deltaY * -0.01;
