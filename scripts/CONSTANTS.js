@@ -56,27 +56,29 @@ function retrieveMenuIDValue(Id) {
 
 /* Tile generation constants */
 
+// Overall tilemap canvas scale + translations - pan/zoom
+let TILEMAP_SCALE = 1;
+let TILEMAP_X_MOD = 0;
+let TILEMAP_Y_MOD = 0;
+
 // Tilemap height/width
-const TILEMAP_HEIGHT = 200;
-const TILEMAP_WIDTH = 200;
+const TILEMAP_HEIGHT = 100;
+const TILEMAP_WIDTH = 100;
 
 // Tile map ruggedness - higher number = more definition
-const TERRAIN_RUGGEDNESS = 16;
+const TERRAIN_RUGGEDNESS = 10;
 
 // Individual tile size
-const TILESIZE = 15;
+const TILESIZE = 20;
 
 // Tileset color dictionary
 const TILESET = {
   "deepWater": "0202CF",
   "water": "0000FF",
-  "sand": "CADB07",
+  "sand": "dede23",
   "grass": "378805",
   "darkGrass": "265C05",
-  "red": "FF0000",
-  "yellow": "FFFF00",
-  "pink": "FFC0CB",
-  "orange": "FFA500",
+  "red": "FF0000"
 }
 
 /* Console Debug Logs */

@@ -67,11 +67,11 @@ class TilemapGenerator {
          if (col == 0 && row == 0) { // top left
            this.map[row][col] = "red";
          } else if (col == 0 && row == this.height - 1) { // bottom left
-           this.map[row][col] = "yellow";
+           this.map[row][col] = "red";
          } else if (col == this.width - 1 && row == 0) { // top right
-           this.map[row][col] = "pink";
+           this.map[row][col] = "red";
          } else if (col == this.width - 1 && row == this.height - 1) { // bottom right
-           this.map[row][col] = "orange";
+           this.map[row][col] = "red";
          } else {
            // Non-special corner cases, input terrain from perlin noise map
            let noise = perlin.get((row/(this.height - 1)) * TERRAIN_RUGGEDNESS, (col/(this.width - 1)) * TERRAIN_RUGGEDNESS);

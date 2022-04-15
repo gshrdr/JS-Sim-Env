@@ -198,8 +198,9 @@ let offScreenCanvas;
 
 // Main Redraw Function - Tilemap Layer
 function redrawTilemap(shouldRegenerate = false) {
-  // Get canvas context + ensure horizontal/vertical scale is fixed to a 1:1 ratio
+  // Set tilemap canvas scale
   const ctx = tilemapCanvas.getContext("2d");
+  ctx.scale(TILEMAP_SCALE, TILEMAP_SCALE);
 
   // Check if we have already generated tilemap offscreen, if so copy to main context, otherwise re-draw
   if (hasGeneratedInitialTilemap == false) {
@@ -224,6 +225,7 @@ function regenerateTerrain() {
   tilemapGenerator.generateTilemap();
 
   // Redraw tilemap on canvas
+  resizeTilemap();
   redrawTilemap(true);
 }
 
@@ -235,8 +237,8 @@ function generateInitialTilemap() {
   if (hasGeneratedOffScreenCanvas == false) {
     // Generate off screen canvas
     offScreenCanvas = document.createElement('canvas');
-    offScreenCanvas.width = tilemapCanvas.width;
-    offScreenCanvas.height = tilemapCanvas.height;
+    offScreenCanvas.width = TILEMAP_WIDTH * TILESIZE;
+    offScreenCanvas.height = TILEMAP_HEIGHT * TILESIZE;
 
     // Flip boolean toggle indicating creation of off screen canvas
     hasGeneratedOffScreenCanvas = true;
@@ -252,10 +254,6 @@ function generateInitialTilemap() {
 
     // Clear canvas
     ctx.clearRect(0, 0, offScreenCanvas.width, offScreenCanvas.height);
-
-    // Update off screen canvas size
-    offScreenCanvas.width = tilemapCanvas.width;
-    offScreenCanvas.height = tilemapCanvas.height;
 
     // Draw off screen tilemap
     drawTilemap(ctx)
@@ -276,10 +274,12 @@ function drawTilemap(ctx) {
       ctx.fillStyle = tilemapGenerator.retrieveTileColor(row, col);
       ctx.fillRect((col * tileSize), (row * tileSize), tileSize, tileSize);
 
-      // Grid
-      ctx.strokeStyle = "black";
-      ctx.lineWidth = 2;
-      ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
+      // Grid - if scale >= 1
+      if (TILEMAP_SCALE >= 1) {
+        ctx.strokeStyle = "black";
+        ctx.lineWidth = 2;
+        ctx.strokeRect((col * tileSize), (row * tileSize), tileSize, tileSize);
+      }
     }
   }
 
@@ -290,7 +290,10 @@ function drawTilemap(ctx) {
 // Copy the offscreen tilemap that we generated and drew already
 function drawOffScreenTilemap() {
   const ctx = tilemapCanvas.getContext("2d");
+  ctx.save();
+  ctx.translate(TILEMAP_X_MOD, TILEMAP_Y_MOD);
   ctx.drawImage(offScreenCanvas, 0, 0);
+  ctx.restore();
 }
 
 /*

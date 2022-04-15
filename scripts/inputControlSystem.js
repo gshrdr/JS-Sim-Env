@@ -11,6 +11,8 @@ let canvasContainer = document.getElementById('canvas-container');
 const drawableCanvas = document.getElementById('drawable-canvas');
 const context = drawableCanvas.getContext('2d');
 
+const tilemapContext = document.getElementById('tilemap-canvas').getContext('2d');
+
 let mouseIsCurrentlyDown = false;
 let recentTouchTimeStamp;
 
@@ -141,6 +143,13 @@ if(isTouchDevice()){
       // Update game state depending on toggle mode selections
       if (DRAW_MODE) drawLine(context, x, y, e.offsetX, e.offsetY);
 
+      if (PAN_ZOOM_MODE) {
+        TILEMAP_X_MOD -= (x - e.offsetX) / TILEMAP_SCALE;
+        TILEMAP_Y_MOD -= (y - e.offsetY) / TILEMAP_SCALE;
+        resizeTilemap();
+        redrawTilemap();
+      }
+
       x = e.offsetX;
       y = e.offsetY;
     }
@@ -165,6 +174,42 @@ if(isTouchDevice()){
 
     // Update game state depending on toggle mode selections
     if (DRAW_MODE) clearDrawingBoard();
+  });
+
+  // Listen for mouse scroll events
+  let wheelTimer = null;
+  canvasContainer.addEventListener('wheel', function (e) {
+    if (logEventsDebug && PAN_ZOOM_MODE) console.log("Scroll event - update canvas scale")
+
+    // Prevent default events
+    e.preventDefault();
+
+    // Update game state depending on toggle mode selections
+    if (PAN_ZOOM_MODE) {
+      // Update scale
+      TILEMAP_SCALE += event.deltaY * -0.01;
+
+      // Restrict scale
+      TILEMAP_SCALE = Math.min(Math.max(.125, TILEMAP_SCALE), 2);
+
+      // Update x/y position
+      //TILEMAP_X_MOD = TILEMAP_X_MOD
+      //TILEMAP_Y_MOD =
+
+      // Apply scale transform
+      resizeTilemap();
+      redrawTilemap();
+
+      // Listen for end of scroll event
+      if(wheelTimer !== null) {
+        clearTimeout(wheelTimer);
+      }
+      wheelTimer = setTimeout(function() {
+        if (logEventsDebug) console.warn("Scroll event ended - regenerate tilemap");
+        resizeTilemap();
+        redrawTilemap(true);
+      }, 1000);
+    }
   });
 }
 
