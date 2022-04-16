@@ -8,31 +8,6 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
   <img width="100%" src="/assets/GitHub-Demo-Img.png" alt="JavaScript Simulation Demo Screenshot" />
 </div>
 
-## Tasks
-- [x] Setup a GitHub repository
-- [x] Get a live code demo working, host this code demo on [gavinshr.com](https://gavinshr.com), include a link to this project with information & an image on my [projects page](https://gavinshr.com/projects), and update the live code demo link at the top of this ReadMe file
-- [x] Build a JavaScript update based game loop so I can update entities across the map programmatically 60x per second
-- [x] Update game camera system with ability to toggle between pan/zoom and draw mode
-- [x] Build a JavaScript based tile map engine that can render a basic grid of tiles
-- [x] Integrate perlin noise based terrain generation
-- [x] Create a menu system that allows me to input and toggle game commands
-- [x] Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
-- [x] Better support for touch/mouse cancel/leave events - if the mouse/pointer leaves the screen the movement event should stop
-- [x] Add reset scale/transform position button to bring game canvas back to starting state
-- [x] Add a button to generate massive tilemaps to test the performance of this system
-- [ ] Bug fix: "mouse out" and "mouse leave" events - canvasContainer is incorrectly telling the inputControl system that the mouse has left the container and is stopping the pan/draw functions erroneously - why is mouse out and mouse leave being called?
-- [ ] Bug fix: Right click or click to inspect element can end up where the pan/draw keeps going even when you're not holding the left button
-- [ ] Improve zoom in/out functionality to zoom onto the mouse/pointer position, rather than zoom in/out from (0, 0)
-- [ ] Improvements to tile map engine: ability to select individual tiles, chunk-based more efficient rendering system
-- [ ] Improve entities system, create an entity component that can be added to any object to update it at 60x per second
-- [ ] Add the ability to save/download & load world/game state
-- [ ] In-game notification system that allows me to send notifications to the user with a drop down from the top of the screen
-- [ ] In-game console/terminal system that allows me to display console logs to the user (useful for mobile devices that don't have a developer console)
-- [ ] Explore a multi-player system with web sockets for a real time connection between multiple people playing/accessing the same game board
-- [ ] Explore a Redis cache database for super fast real-time data storage
-- [ ] Explore an XML/HTTP based REST API built with PHP for server communication
-- [ ] Explore a PHP/MySQL based back-end system for long-term data storage for the individual game board/entity state + a user login/sign up (PHP/MySQL are supported on my Apache hosting, otherwise I would use Node.JS/MongoDB/Express.JS - perhaps this will be something I explore in the future once I upgrade to DigitalOcean Droplet based hosting)
-
 ## Sources
 
 These are the sources, tutorials, and code docs I used to build this project:

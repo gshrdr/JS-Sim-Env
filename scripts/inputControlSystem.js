@@ -218,16 +218,6 @@ if(isTouchDevice()){
     endMouseEvent(e);
   })
 
-  canvasContainer.addEventListener("mouseleave", function(e) {
-    if (logEventsDebug) console.log("Mouse leave");
-    endMouseEvent(e);
-  })
-
-  canvasContainer.addEventListener("mouseout", function(e) {
-    if (logEventsDebug) console.log("Mouse out");
-    endMouseEvent(e);
-  })
-
   function endMouseEvent(e) {
     if (mouseIsCurrentlyDown) {
       mouseIsCurrentlyDown = false;
