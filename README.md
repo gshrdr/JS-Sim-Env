@@ -1,7 +1,5 @@
 # JS-Sim-Env
-A JavaScript Browser Simulation Game Environment. This project is a work-in-progress, I started it on 04/10/22.
-
-This project is a part of my website & portfolio: [gavinshr.com](https://gavinshr.com)  
+A JavaScript Tilemap Simulation System.
 
 ## Live Demo
 You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://www.gavinshr.com/JS-Sim-Env/index.html)  
@@ -11,27 +9,17 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 </div>
 
 ## Tasks
-✔️ Setup a GitHub repository
-
-✔️ Get a live code demo working, host this code demo on [gavinshr.com](https://gavinshr.com), include a link to this project with information & an image on my [projects page](https://gavinshr.com/projects), and update the live code demo link at the top of this ReadMe file
-
-✔️ Build a JavaScript update based game loop so I can update entities across the map programmatically 60x per second
-
-✔️ Update game camera system with ability to toggle between pan/zoom and draw mode
-
-✔️ Build a JavaScript based tile map engine that can render a basic grid of tiles
-
-✔️ Integrate perlin noise based terrain generation
-
-✔️ Create a menu system that allows me to input and toggle game commands
-
-✔️ Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
-
-✔️ Better support for touch/mouse cancel/leave events - if the mouse/pointer leaves the screen the movement event should stop
-
-✔️ Add reset scale/transform position button to bring game canvas back to starting state
-
-✔️ Add a button to generate massive tilemaps to test the performance of this system
+- [x] Setup a GitHub repository
+- [x] Get a live code demo working, host this code demo on [gavinshr.com](https://gavinshr.com), include a link to this project with information & an image on my [projects page](https://gavinshr.com/projects), and update the live code demo link at the top of this ReadMe file
+- [x] Build a JavaScript update based game loop so I can update entities across the map programmatically 60x per second
+- [x] Update game camera system with ability to toggle between pan/zoom and draw mode
+- [x] Build a JavaScript based tile map engine that can render a basic grid of tiles
+- [x] Integrate perlin noise based terrain generation
+- [x] Create a menu system that allows me to input and toggle game commands
+- [x] Integrate pinch to zoom support for touch enabled devices - currently only the scroll wheel can zoom in/out
+- [x] Better support for touch/mouse cancel/leave events - if the mouse/pointer leaves the screen the movement event should stop
+- [x] Add reset scale/transform position button to bring game canvas back to starting state
+- [x] Add a button to generate massive tilemaps to test the performance of this system
 - [ ] Bug fix: "mouse out" and "mouse leave" events - canvasContainer is incorrectly telling the inputControl system that the mouse has left the container and is stopping the pan/draw functions erroneously - why is mouse out and mouse leave being called?
 - [ ] Bug fix: Right click or click to inspect element can end up where the pan/draw keeps going even when you're not holding the left button
 - [ ] Improve zoom in/out functionality to zoom onto the mouse/pointer position, rather than zoom in/out from (0, 0)
