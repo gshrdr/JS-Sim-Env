@@ -19,6 +19,7 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
 - You can use the mouse to scroll/zoom and pan around the screen
 - You can use a touch screen to pinch to zoom and pan around the screen
 - There is a 60fps game loop (as referenced by the small red dot, obviously there isn't much going on here, but the architecture of a game loop is in place for future additions to the simulation)
+- FPS counter, you can active a small FPS debug window in the settings app that shows you a live updated view of the frames per second the game loop is running at 
 - Terrain generation
 - A map grid that is displayed when you zoom in to the map
 - Automatic resizing, the canvas expands to fill the screen when you resize your browser. This also works on mobile screen sizes, where the tilemap expands to fill the entire view on smartphones
