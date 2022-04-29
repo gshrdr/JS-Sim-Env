@@ -8,6 +8,24 @@ You can run this code live in your browser here: [JS-Sim-Env Live Demo](https://
   <img width="100%" src="/assets/GitHub-Demo-Img.png" alt="JavaScript Simulation Demo Screenshot" />
 </div>
 
+## Technologies Used
+
+- HTML5
+- CSS3
+- JavaScript
+
+## Features
+
+- You can use the mouse to scroll/zoom and pan around the screen
+- You can use a touch screen to pinch to zoom and pan around the screen
+- There is a 60fps game loop (as referenced by the small red dot, obviously there isn't much going on here, but the architecture of a game loop is in place for future additions to the simulation)
+- Terrain generation
+- A map grid that is displayed when you zoom in to the map
+- Automatic resizing, the canvas expands to fill the screen when you resize your browser. This also works on mobile screen sizes, where the tilemap expands to fill the entire view on smartphones
+- A settings control menu, you can change the settings of this system using the drop down menu and they even take hold and stay set if you refresh or close your browser
+- A drawing system, I have the ability to draw a simple colored line around this canvas as a proof of concept
+- Granular debug controls, you can activate the developer console in your browser and modify the settings of the app in order to see a detailed console log of development events throughout the system
+
 ## Sources
 
 These are the sources, tutorials, and code docs I used to build this project:
